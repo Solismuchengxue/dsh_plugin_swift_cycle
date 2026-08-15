@@ -1,16 +1,17 @@
 # DeepSeek Harness 隔离兼容性证据
 
 - 日期：2026-08-15（Asia/Shanghai）
-- 状态：PASS（隔离 Runtime、GitHub 固定 commit 分发）；真实用户 profile 与实际消费者为 NOT_VERIFIED
+- 状态：PASS（隔离 Runtime、GitHub 固定 commit 分发、rc.6 隔离复验）；真实用户 profile 与实际消费者为 NOT_VERIFIED
 - 适配器 commit：`ddffe405d223cc161e47c83d6dc18c695bc8c52b`
 - GitHub Release：[`v0.1.0`](https://github.com/Solismuchengxue/dsh_plugin_swift_cycle/releases/tag/v0.1.0) / `c09326cb44ab8dbda67f82535fca4efe85c0444b`
 - 适配器版本：`0.1.0`
 - Swift Cycle：`v1.2.0` / `af3c5ddafba516c304613ea69081118fc234add7`
-- DeepSeek Harness：`47f943859bef60e4160492346772ded9b24f765a`
-- `@deepseek-ai/dsh` / `@deepseek-ai/dsh-skill`：`0.1.0-rc.5`
+- DeepSeek Harness（原始固定基线）：`47f943859bef60e4160492346772ded9b24f765a`
+- `@deepseek-ai/dsh` / `@deepseek-ai/dsh-skill`（原始固定基线）：`0.1.0-rc.5`
+- `@deepseek-ai/dsh` / `@deepseek-ai/dsh-skill`（后续隔离复验）：`0.1.0-rc.6`
 - Node.js：`v25.2.1`
 - npm：`11.6.2`
-- pnpm：固定使用 `11.7.0`
+- pnpm：原始固定基线使用 `11.7.0`；rc.6 隔离复验使用 `11.21.0`
 
 ## 边界
 
@@ -96,6 +97,36 @@ dsh plugin --profile web add 'github:Solismuchengxue/dsh_plugin_swift_cycle#c093
 | 中文参考 | PASS | SHA-256 `ddec383edfa8e419c0b098f6cf6ffc6f5a44c8a4a57084a0e22f222320fb1e0b`；五项操作标题均可读取 |
 | 临时环境清理 | PASS | 删除前验证根目录位于系统 Temp 且不是 reparse point，外部 reparse target 为 0；删除后路径不存在 |
 
+## rc.6 隔离兼容性复验
+
+复验使用真实环境已安装的 `@deepseek-ai/dsh` `0.1.0-rc.6`、`@deepseek-ai/dsh-skill` `0.1.0-rc.6` 和 pnpm `11.21.0`，但把 `DSH_HOME`、`DSH_AGENTS_HOME` 与工作目录全部指向一次性 `<TEMP_ROOT>`。子进程显式移除了模型 API 环境变量并关闭 telemetry；未挂载 LLM、credentials、Web 或 session persistence，也未读取或修改真实 `~/.dsh`。
+
+安装身份仍为公开 GitHub 固定 commit：
+
+```powershell
+dsh plugin --profile web add 'github:Solismuchengxue/dsh_plugin_swift_cycle#c09326cb44ab8dbda67f82535fca4efe85c0444b'
+```
+
+pnpm 使用该完整 GitHub spec，并从内容寻址缓存复用同一对象；本次下载数为 0，不改变固定 commit 身份。
+
+| 检查 | 结果 | 证据 |
+|---|---|---|
+| 空白 profile 基线 | PASS | 依赖 0；bundle 仅 `@deepseek-ai/dsh-base`、`@deepseek-ai/dsh-web-app`；配置 491 行 |
+| 安装与身份 | PASS | 依赖精确固定到完整 commit；bundle 恰好 1 个；版本 `0.1.0` |
+| 安装入口完整性 | PASS | 已安装 `index.js` SHA-256 `ec025bec6389a3a1c5ef285412c49e9e64ccd545bd51a8ae25ef91bb3b6b63d8` |
+| 配置差分 | PASS | 基线 SHA-256 `577cd467343c634ec4d479e8d75525a25818a57cec961788e8e266d37ee8c015`；安装后 `9c49b89fd40e5679030fdd1f777e6b5f704ea14d8d6ca78c71bb2045c126b2a6`；仅新增预期三行，删除 0 行 |
+| Runtime 注册 | PASS | provider `dsh-plugin-swift-cycle`；source `bundled`；资源目录位于临时已安装包内 |
+| 调用策略 | PASS | `modelInvocable: false`；`userInvocable: true`；模型目录不包含 `swift-cycle`；模型工具调用失败关闭 |
+| 用户显式调用 | PASS | 同一消息内重复 `/swift-cycle` 只产生 1 条 `skill-invocation`，并注入规范 `<skill_content name="swift-cycle">` |
+| 中文参考 | PASS | SHA-256 `ddec383edfa8e419c0b098f6cf6ffc6f5a44c8a4a57084a0e22f222320fb1e0b`；五项操作标题均可读取 |
+| 安装重试 | PASS | 同一固定 spec 再次安装后仍为 1 个依赖、1 个 bundle，配置哈希不变 |
+| 卸载与重装 | PASS | 卸载后依赖 0、Swift bundle 0、安装目录不存在且配置恢复基线；重装得到相同入口与配置哈希，Runtime 再次通过 |
+| 清单序列化 | PASS（有记录差异） | 官方 pnpm remove 会删除初始化时的空 `dependencies: {}` 字段；递归键排序并把缺失依赖视为空集合后，manifest 语义一致；lock、workspace、profile patch 均逐字节恢复 |
+| 最终回退 | PASS | 最终再次卸载；基础 bundle、配置哈希、依赖集合和安装目录均恢复基线 |
+| 临时环境清理 | PASS | 删除前 567 个目录项、510 个内部 reparse、外部 target 0；删除后 `<TEMP_ROOT>` 不存在 |
+
+结论：公开发布 commit 对 rc.6 的隔离安装、Runtime 注册、用户显式调用、幂等重试、卸载与重装兼容性为 PASS。该结论不证明真实用户 profile 已安装，也不证明真实 Web/UI 消费者已切换。
+
 ## 未验证项
 
 - NOT_VERIFIED：真实用户 profile 的安装与加载。
@@ -106,4 +137,5 @@ dsh plugin --profile web add 'github:Solismuchengxue/dsh_plugin_swift_cycle#c093
 
 - 临时隔离目录：PASS；删除前确认根目录位于系统 Temp、根目录本身不是 reparse point，所有内部 reparse target 均未越界；删除后独立复核路径不存在。
 - GitHub 固定 commit 安装临时目录：PASS；使用相同边界检查独立清理，删除后路径不存在。
+- rc.6 复验临时目录：PASS；567 个目录项中的 510 个 reparse target 均未越界，删除后路径不存在。
 - 真实用户 profile：未访问、未修改。
