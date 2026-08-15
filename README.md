@@ -10,8 +10,8 @@
 - 上游整体 SHA-256：`e01de6fa081c12c7e481a219d3932e48a2e386f05202e7b8a6e51a0029fad686`
 - 本地源码验证：已通过
 - 候选制品预检：已通过 dry-run 文件合同和临时解包后完整性验证
-- 分发状态：尚未创建远程仓库或 Release
-- Harness Runtime 兼容性：已通过固定版本的隔离验证；真实用户 profile 仍未验证
+- 分发状态：GitHub `v0.1.0` 已发布；npm 未发布
+- Harness Runtime 兼容性：已通过固定版本的隔离验证，并已通过 GitHub 固定 commit 隔离安装；真实用户 profile 仍未验证
 
 以上结果证明源码、候选制品和固定版本的隔离 Harness Runtime 符合本仓库合同，不能证明真实 Harness profile 已安装、加载或生效。
 
@@ -43,13 +43,13 @@ Swift Cycle 不进入模型可隐式选择的 Skill 目录。用户需要显式�
 
 ## 安装约定
 
-首版只支持固定 GitHub commit 安装，不发布 npm 包。每个 GitHub Release 的说明会提供对应的完整 40 位 commit 和可复制命令；不要使用未固定的默认分支或可移动 tag。远程仓库尚未创建，因此当前不能执行下面的示例：
+首版只支持固定 GitHub commit 安装，不发布 npm 包。`v0.1.0` 对应的不可变安装身份是完整 40 位 commit；不要使用未固定的默认分支或可移动 tag：
 
 ```powershell
-dsh plugin --profile web add "github:Solismuchengxue/dsh_plugin_swift_cycle#<FULL_40_CHARACTER_COMMIT_SHA>"
+dsh plugin --profile web add "github:Solismuchengxue/dsh_plugin_swift_cycle#c09326cb44ab8dbda67f82535fca4efe85c0444b"
 ```
 
-发布后应从对应 Release Notes 复制完整命令。Release tag 用于版本发现，完整 commit 才是安装身份。
+该命令已在临时隔离 `DSH_HOME` 中验证。后续版本仍应从对应 [GitHub Release](https://github.com/Solismuchengxue/dsh_plugin_swift_cycle/releases/tag/v0.1.0) 复制完整命令；Release tag 用于版本发现，完整 commit 才是安装身份。
 
 安装或改动 profile 前先检查合成配置：
 

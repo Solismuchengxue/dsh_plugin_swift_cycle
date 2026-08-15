@@ -7,7 +7,7 @@
 - 打包制品：dry-run 文件合同及临时解包后完整性验证已通过。
 - 隔离 Harness 兼容性：已按固定版本通过验证。
 - 真实用户环境：未安装、未验证。
-- 远程发布：未创建、未授权。
+- GitHub 分发：`v0.1.0` 已发布，固定 commit 的隔离安装已验证；npm 未发布。
 
 以上结论彼此独立；本项目不使用单一总体状态替代各层证据。
 
@@ -35,4 +35,4 @@
 - [实施计划](docs/superpowers/plans/2026-08-15-deepseek-harness-adapter.md)
 - [隔离 Harness 兼容性证据](docs/evidence/2026-08-15-dsh-compatibility.md)
 
-隔离 Runtime 结论只适用于上述固定 Harness commit 和 Skill API 版本；真实用户 profile、实际消费者及远程分发仍需各自验证。
+隔离 Runtime 与 GitHub 固定 commit 安装结论只适用于上述固定 Harness commit 和 Skill API 版本；真实用户 profile 和实际消费者仍需各自验证。

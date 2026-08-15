@@ -1,8 +1,9 @@
 # DeepSeek Harness 隔离兼容性证据
 
 - 日期：2026-08-15（Asia/Shanghai）
-- 状态：PASS（隔离 Runtime）；真实用户 profile 与实际消费者为 NOT_VERIFIED
+- 状态：PASS（隔离 Runtime、GitHub 固定 commit 分发）；真实用户 profile 与实际消费者为 NOT_VERIFIED
 - 适配器 commit：`ddffe405d223cc161e47c83d6dc18c695bc8c52b`
+- GitHub Release：[`v0.1.0`](https://github.com/Solismuchengxue/dsh_plugin_swift_cycle/releases/tag/v0.1.0) / `c09326cb44ab8dbda67f82535fca4efe85c0444b`
 - 适配器版本：`0.1.0`
 - Swift Cycle：`v1.2.0` / `af3c5ddafba516c304613ea69081118fc234add7`
 - DeepSeek Harness：`47f943859bef60e4160492346772ded9b24f765a`
@@ -13,7 +14,7 @@
 
 ## 边界
 
-全部操作发生在一次性 `<TEMP_ROOT>`、隔离 `DSH_HOME` 和本地验证 worktree 中。未读取或修改真实 `~/.dsh`，未读取凭据，未调用模型，未启动真实项目操作，未创建远程、tag、Release 或 Registry 发布。网络仅用于获取固定官方源码和构建依赖；适配器 Runtime 验证未发起网络请求。
+全部兼容性与分发验证均发生在一次性 `<TEMP_ROOT>`、隔离 `DSH_HOME` 和本地验证 worktree 中。未读取或修改真实 `~/.dsh`，未读取凭据，未调用模型，未启动真实项目操作，也未发布 Registry 包。网络仅用于获取固定官方源码、构建依赖和用户指定的 GitHub 固定提交；适配器 Runtime 本身未发起网络请求。
 
 ## 固定输入
 
@@ -71,14 +72,38 @@ dsh --profile web --dump-config
 | 重装 | PASS | 同一 `.tgz` 只注册一次 bundle，配置 SHA-256 与首次安装一致 |
 | 重装后 Runtime | PASS | 再次注册、显式注入、模型目录排除和中文参考哈希均通过 |
 
+## GitHub 固定 commit 分发验证
+
+验证对象为公开仓库 `Solismuchengxue/dsh_plugin_swift_cycle` 的完整发布 commit `c09326cb44ab8dbda67f82535fca4efe85c0444b`。`origin/main`、`v0.1.0` tag 和 GitHub Release 在发布时均指向该 commit，Release 未附加额外资产。
+
+脱敏安装命令：
+
+```powershell
+$env:DSH_HOME = '<TEMP_ROOT>/dsh-home'
+dsh plugin --profile web add 'github:Solismuchengxue/dsh_plugin_swift_cycle#c09326cb44ab8dbda67f82535fca4efe85c0444b'
+```
+
+| 检查 | 结果 | 证据 |
+|---|---|---|
+| Harness 基线 | PASS | commit `47f943859bef60e4160492346772ded9b24f765a`；`@deepseek-ai/dsh` / Skill `0.1.0-rc.5` |
+| GitHub 依赖身份 | PASS | 安装结果保留完整 commit `c09326cb44ab8dbda67f82535fca4efe85c0444b` |
+| 安装工具链 | PASS | 官方源码安装与构建固定使用 pnpm `11.7.0`；插件命令由系统 pnpm `11.21.0` 转发执行 |
+| 配置差分 | PASS | 仅新增 bundle 标题、`id: swift-cycle`、`name: dsh-plugin-swift-cycle` 三行；删除 0 行 |
+| 配置 SHA-256 | PASS | 安装前 `577cd467343c634ec4d479e8d75525a25818a57cec961788e8e266d37ee8c015`；安装后 `9c49b89fd40e5679030fdd1f777e6b5f704ea14d8d6ca78c71bb2045c126b2a6` |
+| 模型、凭据或网络配置 | PASS | 配置差分未新增相关字段；环境中未提供模型密钥，未启动模型或 Web 消费者 |
+| 安装入口完整性 | PASS | 已安装 `index.js` 与发布候选均为 SHA-256 `ec025bec6389a3a1c5ef285412c49e9e64ccd545bd51a8ae25ef91bb3b6b63d8` |
+| Runtime 注册与策略 | PASS | provider `dsh-plugin-swift-cycle`、source `bundled`、`modelInvocable: false`、`userInvocable: true` |
+| 中文参考 | PASS | SHA-256 `ddec383edfa8e419c0b098f6cf6ffc6f5a44c8a4a57084a0e22f222320fb1e0b`；五项操作标题均可读取 |
+| 临时环境清理 | PASS | 删除前验证根目录位于系统 Temp 且不是 reparse point，外部 reparse target 为 0；删除后路径不存在 |
+
 ## 未验证项
 
 - NOT_VERIFIED：真实用户 profile 的安装与加载。
 - NOT_VERIFIED：真实 Web/UI 或其他实际消费者是否使用该适配器。
-- NOT_VERIFIED：固定 GitHub commit 的远程安装路径。
-- NOT_VERIFIED：npm/其他 Registry 发布、tag、Release 与 topic。
+- NOT_VERIFIED：npm/其他 Registry 分发；本项目未发布 Registry 包。
 
 ## 清理
 
 - 临时隔离目录：PASS；删除前确认根目录位于系统 Temp、根目录本身不是 reparse point，所有内部 reparse target 均未越界；删除后独立复核路径不存在。
+- GitHub 固定 commit 安装临时目录：PASS；使用相同边界检查独立清理，删除后路径不存在。
 - 真实用户 profile：未访问、未修改。
