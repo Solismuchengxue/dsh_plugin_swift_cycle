@@ -1,7 +1,95 @@
 # Swift Cycle for DeepSeek Harness
 
-这是 Swift Cycle 的 DeepSeek Harness 适配器项目。它计划把锁定的 Swift Cycle v1.2.0 注册为只能由用户显式调用的 Harness Skill。
+这是 [Swift Cycle](https://github.com/Solismuchengxue/skill_swift_cycle) 的 DeepSeek Harness 适配器。它把锁定的 Swift Cycle v1.2.0 载荷注册为只能由用户显式调用的 Harness Skill。
 
-上游 Swift Cycle：`Solismuchengxue/skill_swift_cycle`，tag `v1.2.0`，commit `af3c5ddafba516c304613ea69081118fc234add7`。
+## 当前状态
 
-当前版本仍在本地实施和验证中，尚未发布，也没有可供用户安装的固定适配器提交。请勿把本仓库当前状态视为已通过 DeepSeek Harness Runtime 兼容性验证。
+- 适配器版本：`0.1.0`
+- 上游版本：`v1.2.0`
+- 上游 commit：`af3c5ddafba516c304613ea69081118fc234add7`
+- 上游整体 SHA-256：`e01de6fa081c12c7e481a219d3932e48a2e386f05202e7b8a6e51a0029fad686`
+- 分发状态：尚未创建远程仓库或 Release
+- Harness Runtime 兼容性：尚未执行隔离验证
+
+本地测试和打包预检通过后，只能证明源码与候选制品符合本仓库合同，不能证明真实 Harness profile 已安装、加载或生效。
+
+## 包含的 Swift Cycle 能力
+
+- Knowledge Promotion：把长期共享事实从本地记录晋升到适当的 Git 管理资产。
+- State Separation：拆分彼此独立的工程、实验、质量和发布结论。
+- Governance Baseline：复杂治理开始前记录可比较的当前基线。
+- Commit Boundary Planning：为多提交工作预先划分单一意图和验证边界。
+- Source/Runtime Boundary：分别验证源码、制品、运行态和实际消费者。
+
+完整治理规则以锁定的上游 `SKILL.md` 为准；本 README 不复制 Skill 正文。
+
+## 调用策略
+
+适配器向 Harness 注册：
+
+```text
+name = swift-cycle
+modelInvocable = false
+userInvocable = true
+```
+
+Swift Cycle 不进入模型可隐式选择的 Skill 目录。用户需要显式输入：
+
+```text
+/swift-cycle
+```
+
+## 安装约定
+
+首版只计划支持固定 GitHub commit 安装，不发布 npm 包。远程仓库和适配器 commit 尚未创建，因此当前不能执行下面的示例：
+
+```powershell
+dsh plugin --profile web add "github:Solismuchengxue/dsh_plugin_swift_cycle#FULL_40_CHARACTER_COMMIT_SHA"
+```
+
+发布后必须把 `FULL_40_CHARACTER_COMMIT_SHA` 替换为 Release 对应的完整 40 位 commit，不能使用未固定的默认分支。
+
+安装或改动 profile 前先检查合成配置：
+
+```powershell
+dsh --profile web --dump-config
+```
+
+本项目当前没有授权安装到任何真实 profile。
+
+## 本地验证
+
+需要 Node.js 20 或更高版本。本包没有运行时依赖，也不需要执行安装生命周期脚本。
+
+```powershell
+npm test
+npm run verify:upstream
+npm run pack:dry-run
+```
+
+维护者可以显式提供一个 Swift Cycle checkout，做只读载荷比对：
+
+```powershell
+node scripts/verify-upstream.mjs --source "<path-to-swift-cycle-skill-directory>"
+```
+
+普通插件加载和用户安装不会访问网络，不读取凭据，也不会修改用户级 Skill 目录。
+
+## 同名 Skill 与证据边界
+
+根据锁定的 DeepSeek Harness Skill Registry 规则，项目级同名条目可以覆盖本适配器的 Runtime 注册；Runtime 注册可能遮蔽同层的用户级同名条目。本适配器不会删除或改写被遮蔽的 Skill。
+
+以下结论必须分别验证：
+
+1. Git 源码与上游锁一致；
+2. `npm pack` 候选制品内容正确；
+3. 隔离 Harness Runtime 能注册和显式调用；
+4. 真实用户 profile 已安装并由实际消费者使用。
+
+当前只计划完成前两层，并停在隔离 Harness 验证之前。
+
+## 权威来源
+
+- Swift Cycle 行为和版本：[Solismuchengxue/skill_swift_cycle](https://github.com/Solismuchengxue/skill_swift_cycle)
+- DeepSeek Harness 插件与 Skill 语义：[deepseek-ai/deepseek-harness](https://github.com/deepseek-ai/deepseek-harness)
+- 本适配器的架构和验证边界：[DESIGN.md](DESIGN.md)
