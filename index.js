@@ -10,6 +10,14 @@ const expectedFiles = [
   'references/zh-CN.md',
 ]
 const sha256Pattern = /^[0-9a-f]{64}$/i
+const providerName = 'dsh-plugin-swift-cycle'
+const invocation = Object.freeze({
+  modelInvocable: false,
+  userInvocable: true,
+})
+
+export const name = providerName
+export const inject = ['skills']
 
 function sha256(value) {
   return createHash('sha256').update(value).digest('hex')
@@ -176,4 +184,120 @@ export async function verifySourceSnapshot({ sourceRoot, lock }) {
     throw new Error('sourceRoot is required')
   }
   return verifySnapshotRoot(path.resolve(sourceRoot), lock)
+}
+
+export function extractBody(skillText) {
+  if (typeof skillText !== 'string') {
+    throw new TypeError('Skill content must be a string')
+  }
+  const normalized = skillText.replaceAll('\r\n', '\n')
+  if (!normalized.startsWith('---\n')) {
+    throw new Error('Skill frontmatter must start with ---')
+  }
+  const endMarker = '\n---\n'
+  const endIndex = normalized.indexOf(endMarker, 4)
+  if (endIndex === -1) {
+    throw new Error('Skill frontmatter must end with ---')
+  }
+
+  const fields = new Map()
+  for (const line of normalized.slice(4, endIndex).split('\n')) {
+    if (line.trim() === '') continue
+    const separator = line.indexOf(':')
+    if (separator <= 0 || line.startsWith(' ') || line.startsWith('\t')) {
+      throw new Error(`unsupported Skill frontmatter line: ${line}`)
+    }
+    const key = line.slice(0, separator).trim()
+    const value = line.slice(separator + 1).trim()
+    if (fields.has(key)) {
+      throw new Error(`duplicate frontmatter key: ${key}`)
+    }
+    if (value.length === 0) {
+      throw new Error(`empty frontmatter value: ${key}`)
+    }
+    fields.set(key, value)
+  }
+
+  const skillName = fields.get('name')
+  const description = fields.get('description')
+  if (typeof skillName !== 'string' || typeof description !== 'string') {
+    throw new Error('Skill frontmatter requires name and description')
+  }
+
+  return {
+    name: skillName,
+    description,
+    content: normalized.slice(endIndex + endMarker.length),
+  }
+}
+
+function registrationIdentity({ lock, name: skillName, description }) {
+  return {
+    name: skillName,
+    description,
+    source: 'bundled',
+    provider: providerName,
+    invocation,
+    upstream: {
+      repository: lock.upstream.repository,
+      tag: lock.upstream.tag,
+      commit: lock.upstream.commit,
+    },
+    adapterVersion: lock.adapter.version,
+    payloadSha256: lock.payloadSha256,
+  }
+}
+
+export async function loadPackagedSkill(options = {}) {
+  const verified = await verifyPackagedSnapshot(options)
+  const skillPath = path.join(verified.snapshotRoot, 'SKILL.md')
+  const parsed = extractBody(await readFile(skillPath, 'utf8'))
+  if (parsed.name !== verified.lock.upstream.skillName) {
+    throw new Error(`unexpected packaged Skill name: ${parsed.name}`)
+  }
+
+  const identity = registrationIdentity({
+    lock: verified.lock,
+    name: parsed.name,
+    description: parsed.description,
+  })
+  const registrationMetadataSha256 = sha256(
+    Buffer.from(JSON.stringify(identity), 'utf8'),
+  )
+  if (registrationMetadataSha256 !== verified.lock.registrationMetadataSha256) {
+    throw new Error('registration metadata hash mismatch')
+  }
+
+  return {
+    name: parsed.name,
+    description: parsed.description,
+    source: 'bundled',
+    provider: providerName,
+    invocation: { ...invocation },
+    resourceBase: {
+      kind: 'directory',
+      path: verified.snapshotRoot,
+    },
+    content: parsed.content,
+    metadata: {
+      upstreamRepository: verified.lock.upstream.repository,
+      upstreamTag: verified.lock.upstream.tag,
+      upstreamCommit: verified.lock.upstream.commit,
+      adapterVersion: verified.lock.adapter.version,
+      payloadSha256: verified.payloadSha256,
+      registrationMetadataSha256,
+    },
+  }
+}
+
+export async function registerPackagedSkill(ctx, options = {}) {
+  if (typeof ctx?.skills?.register !== 'function') {
+    throw new Error('DeepSeek Harness skills service is unavailable')
+  }
+  const skill = await loadPackagedSkill(options)
+  return ctx.skills.register(skill)
+}
+
+export async function apply(ctx) {
+  return registerPackagedSkill(ctx)
 }
