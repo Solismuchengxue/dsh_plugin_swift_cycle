@@ -1,0 +1,37 @@
+# Swift Cycle DeepSeek Harness 适配器设计
+
+## 状态
+
+- 项目治理：已建立。
+- 适配器源码：实施中。
+- 打包制品：待验证。
+- 隔离 Harness 兼容性：等待单独授权。
+- 真实用户环境：未安装、未验证。
+- 远程发布：未创建、未授权。
+
+以上结论彼此独立；本项目不使用单一总体状态替代各层证据。
+
+## 目标
+
+把锁定的 Swift Cycle v1.2.0 载荷包装为一个可由 DeepSeek Harness 安装、仅允许用户显式调用、离线可校验的适配器，同时保持 Swift Cycle 权威仓库不变。
+
+## 正式架构
+
+适配器携带只读的上游快照，通过 DeepSeek Harness 的 `ctx.skills.register()` 注册 `swift-cycle`。上游身份和文件由 `upstream.lock.json` 及 SHA-256 校验约束；Harness 专用调用策略位于快照之外。
+
+首版使用固定 GitHub commit 安装，不发布 npm 包，不在运行时访问网络，也不使用凭据或安装脚本。
+
+## 关键边界
+
+- 权威治理内容：Swift Cycle 上游仓库及其 v1.2.0 Release。
+- Harness 适配行为：本仓库的入口、bundle patch、锁文件和兼容性证据。
+- 交付层次：Git 源码 → 本地 pack 候选制品 → 隔离 Harness runtime → 真实用户 profile/consumer。
+- 调用策略：`modelInvocable: false`、`userInvocable: true`。
+- 兼容性基线：`deepseek-ai/deepseek-harness` commit `47f943859bef60e4160492346772ded9b24f765a`，`@deepseek-ai/dsh-skill` `0.1.0-rc.5`。
+
+## 详细文档
+
+- [已批准设计](docs/superpowers/specs/2026-08-15-deepseek-harness-adapter-design.md)
+- [实施计划](docs/superpowers/plans/2026-08-15-deepseek-harness-adapter.md)
+
+兼容性证据只有在取得隔离 Harness 测试授权并实际执行后才进入 `docs/evidence/`；当前不得把本地源码或打包验证写成 Runtime 兼容证据。

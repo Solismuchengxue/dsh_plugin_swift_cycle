@@ -1,0 +1,10 @@
+.worktrees/
+TODO.md
+DEVLOG.md
+METHODOLOGY.md
+node_modules/
+coverage/
+*.tgz
+*.log
+.DS_Store
+Thumbs.db
