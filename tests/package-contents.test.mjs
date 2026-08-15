@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { spawnSync } from 'node:child_process'
-import { mkdir, mkdtemp, rm } from 'node:fs/promises'
+import { mkdir, mkdtemp, readFile, rm } from 'node:fs/promises'
 import os from 'node:os'
 import path from 'node:path'
 import test from 'node:test'
@@ -67,9 +67,11 @@ test('packed artifact verifies its embedded Swift Cycle snapshot after extractio
   const extractedPackage = path.join(extractRoot, 'package')
   const entrypoint = await import(pathToFileURL(path.join(extractedPackage, 'index.js')).href)
   const verified = await entrypoint.verifyPackagedSnapshot({ packageRoot: extractedPackage })
+  const license = await readFile(path.join(extractedPackage, 'LICENSE'), 'utf8')
 
   assert.equal(
     verified.payloadSha256,
     'e01de6fa081c12c7e481a219d3932e48a2e386f05202e7b8a6e51a0029fad686',
   )
+  assert.ok(!license.includes('\r'), 'packed LICENSE must use LF line endings')
 })
