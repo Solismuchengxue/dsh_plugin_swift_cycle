@@ -18,6 +18,7 @@
 - 官方兼容基线固定为 `deepseek-ai/deepseek-harness` commit `47f943859bef60e4160492346772ded9b24f765a` 和 `@deepseek-ai/dsh-skill` `0.1.0-rc.5`。未来版本必须重新验证，不能沿用结论。
 - 本计划不授权安装 DSH、修改真实 profile、创建 remote、push、tag、Release、GitHub Topic 或 npm 发布。
 - 每个实现任务先写失败测试，再做最小实现；提交前至少运行相关测试和 `git diff --check`。
+- 适配器仓库自身必须显式使用当前安装的 `$swift-cycle` 进行治理；这与包内分发的锁定 Swift Cycle 快照是两个独立角色，不能互相替代。
 
 ## 官方实现依据
 
@@ -39,8 +40,11 @@
 | 文件 | 唯一职责 |
 | --- | --- |
 | `AGENTS.md` | 适配器仓库边界和维护约束 |
+| `DESIGN.md` | 适配器设计总入口、权威关系和详细文档索引 |
 | `.gitattributes` | 固定文本换行，保证跨平台哈希稳定 |
-| `.gitignore` | 排除依赖、打包产物和本地缓存 |
+| `.gitignore` | 排除本地维护记录、依赖、打包产物和缓存 |
+| `TODO.md` | ignored 的当前执行切片、阻塞和下一步 |
+| `DEVLOG.md` | ignored 的失败、内部判断和维护过程 |
 | `package.json` | npm 包身份、DSH bundle 声明和本地验证命令 |
 | `cordis.patch.yml` | 只把适配器插件插入 Harness 配置 |
 | `index.js` | 验证快照、解析 Skill、注册 Runtime Skill |
@@ -48,16 +52,94 @@
 | `vendor/swift-cycle/**` | 未经修改的 Swift Cycle v1.2.0 分发快照 |
 | `scripts/verify-upstream.mjs` | 离线快照验证及维护者显式源目录比对 |
 | `tests/*.test.mjs` | 包合同、完整性、注册行为和打包边界测试 |
-| `README.md` | 中文安装、验证、限制和权威来源说明 |
+| `README.md` | 纯用户视角的中文介绍、安装、验证和限制 |
 | `docs/evidence/*.md` | 获得授权后记录隔离 Harness 兼容性证据 |
 
-## 任务 1：建立最小组合包合同与仓库边界
+## 任务 0：用 Swift Cycle 建立项目自身治理基线
 
 **文件：**
 
 - 新建：`AGENTS.md`
+- 新建：`DESIGN.md`
+- 新建：`README.md`
 - 新建：`.gitattributes`
 - 新建：`.gitignore`
+- 本地新建且保持 ignored：`TODO.md`
+- 本地新建且保持 ignored：`DEVLOG.md`
+
+### 步骤 1：显式加载 Swift Cycle 并采集新鲜基线
+
+执行 Agent 必须在开始本任务时显式使用当前安装的 `$swift-cycle`，并运行：
+
+```powershell
+git rev-parse HEAD
+git branch --show-current
+git status --short
+git remote -v
+rg --files
+```
+
+把观察到的当前状态与目标状态分开。预期初始事实是：仓库只有已批准设计和实施计划，没有插件实现、remote、发布或 Runtime 证据；若实际状态不同，先报告差异并更新基线，不能覆盖既有工作。
+
+### 步骤 2：建立最小文档所有权
+
+`DESIGN.md` 只做简洁总入口，记录目标、采用架构、权威来源和以下链接：
+
+- 已批准设计：`docs/superpowers/specs/2026-08-15-deepseek-harness-adapter-design.md`
+- 共享实施计划：`docs/superpowers/plans/2026-08-15-deepseek-harness-adapter.md`
+- 兼容性证据目录：`docs/evidence/`（尚未产生时明确标记为等待授权，不创建空目录）
+
+`README.md` 使用纯用户视角，只说明项目用途、上游身份和当前尚未发布/尚不可安装的真实限制；安装命令等到任务 4 有证据时再加入。
+
+`AGENTS.md` 记录：
+
+- 本仓库与权威 Swift Cycle 仓库彼此独立；
+- 非简单治理、文档收敛、提交规划和源码/运行态判断必须显式调用 `$swift-cycle`；
+- vendor 只能从锁定上游刷新，禁止手改；
+- 用户授权不能跨 source、artifact、隔离 runtime、真实用户 runtime、remote 和发布层传递；
+- TODO/DEVLOG 只作本地捕获面，长期事实必须晋升到 README、DESIGN、共享计划或 evidence。
+
+### 步骤 3：建立本地维护视图，不把它变成共享事实源
+
+`.gitignore` 明确忽略 `TODO.md`、`DEVLOG.md`、`METHODOLOGY.md`、`node_modules/`、`*.tgz`、覆盖率和临时缓存。
+
+- `TODO.md` 只链接本计划并记录当前执行切片；不复制完整计划。
+- `DEVLOG.md` 只记录执行期失败、拒绝方案和内部判断；可复用事实按职责晋升后只保留链接。
+- 不创建 `PROJECT_STATE.md`，不自动镜像本地记录。
+
+### 步骤 4：拆分项目实际存在的生命周期和交付层
+
+不定义固定字段或 Schema，但文档必须把以下结论独立表达：
+
+- 仓库治理是否建立；
+- 适配器源码是否实现并通过本地测试；
+- 打包制品是否通过内容和完整性验证；
+- 隔离 Harness 兼容性是否验证；
+- remote、tag、Release、Topic 是否发布；
+- 真实用户 profile 是否安装并生效。
+
+对应的源码/运行态边界是：Git 源码 → `npm pack` 候选制品 → 隔离 Harness runtime → 真实用户 profile/consumer。前一层通过或获得授权不能关闭、执行或证明后一层。
+
+### 步骤 5：验证治理文件并提交任务 0
+
+```powershell
+git check-ignore -v TODO.md DEVLOG.md METHODOLOGY.md
+$trackedLocalRecords = git ls-files -- TODO.md DEVLOG.md METHODOLOGY.md
+if ($trackedLocalRecords) { throw "local maintenance records must remain untracked: $trackedLocalRecords" }
+git diff --check
+git status --short
+git add -- AGENTS.md DESIGN.md README.md .gitattributes .gitignore
+git diff --cached --name-only
+git diff --cached --check
+git commit -m "chore: establish Swift Cycle project governance"
+```
+
+预期：`git check-ignore` 成功；`git ls-files --error-unmatch` 对三个本地文件返回未跟踪；提交只包含五个共享治理文件，TODO/DEVLOG 保持本地 ignored。
+
+## 任务 1：建立最小组合包合同
+
+**文件：**
+
 - 新建：`package.json`
 - 新建：`cordis.patch.yml`
 - 新建：`LICENSE`
@@ -124,7 +206,7 @@ node --test tests/package-contract.test.mjs
       name: dsh-plugin-swift-cycle
 ```
 
-`.gitattributes` 至少把 `*.js`、`*.mjs`、`*.json`、`*.yml`、`*.yaml`、`*.md` 固定为 LF；`.gitignore` 排除 `node_modules/`、`*.tgz`、覆盖率和常见临时缓存。`AGENTS.md` 明确 vendor 只可由锁定上游刷新，不可手改。
+任务 0 已用 `.gitattributes` 固定文本换行，并由 `AGENTS.md` 约束 vendor 来源；本任务不得重复这些规则。
 
 ### 步骤 3：验证并提交任务 1
 
@@ -132,12 +214,12 @@ node --test tests/package-contract.test.mjs
 node --test tests/package-contract.test.mjs
 git diff --check
 git status --short
-git add -- AGENTS.md .gitattributes .gitignore package.json cordis.patch.yml LICENSE tests/package-contract.test.mjs
+git add -- package.json cordis.patch.yml LICENSE tests/package-contract.test.mjs
 git diff --cached --check
 git commit -m "chore: scaffold DeepSeek Harness bundle"
 ```
 
-预期：合同测试通过；暂存和提交不包含设计文档之外的历史修改。
+预期：合同测试通过；暂存和提交只包含最小组合包合同，不混入治理文件或本地维护记录。
 
 ## 任务 2：锁定 Swift Cycle v1.2.0 上游载荷
 
@@ -324,7 +406,7 @@ git commit -m "feat: register Swift Cycle as a user-only DSH skill"
 
 **文件：**
 
-- 新建：`README.md`
+- 修改：`README.md`
 - 新建：`tests/package-contents.test.mjs`
 - 修改：`package.json`（仅在 dry-run 证据要求修正发布清单时）
 
@@ -350,7 +432,7 @@ git commit -m "feat: register Swift Cycle as a user-only DSH skill"
 node --test tests/package-contents.test.mjs
 ```
 
-预期：README 尚不存在或文件清单不匹配，测试失败。
+预期：任务 0 的最小 README 尚未满足正式安装内容合同，或发布文件清单不匹配，测试失败。
 
 ### 步骤 2：编写中文 README
 
@@ -557,7 +639,8 @@ git tag --list
 
 只有以下条件同时成立，才可把“本地适配器实现”标记为完成：
 
-- 任务 1–5 全部完成且有新鲜测试输出；
+- 任务 0–5 全部完成且有新鲜验证输出；
+- 项目自身已按 Swift Cycle 建立 README、DESIGN、AGENTS、共享计划和 ignored 本地维护记录边界；
 - vendor 与锁定上游逐文件及整体哈希一致；
 - 注册对象明确禁止模型隐式调用；
 - dry-run 包内容严格匹配合同；
