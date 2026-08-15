@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "adapter": {
+    "name": "dsh-plugin-swift-cycle",
+    "version": "0.1.0"
+  },
+  "upstream": {
+    "repository": "https://github.com/Solismuchengxue/skill_swift_cycle",
+    "tag": "v1.2.0",
+    "commit": "af3c5ddafba516c304613ea69081118fc234add7",
+    "skillName": "swift-cycle"
+  },
+  "files": [
+    {
+      "path": "SKILL.md",
+      "sha256": "27ce135df6ed459a869b10711cfab431d2772fe806a775b1bc5882692a005b82"
+    },
+    {
+      "path": "agents/openai.yaml",
+      "sha256": "2c28493e10c85a7710a5e774844bb0515f606c4506e5e8d5d12fa1be21107898"
+    },
+    {
+      "path": "references/zh-CN.md",
+      "sha256": "ddec383edfa8e419c0b098f6cf6ffc6f5a44c8a4a57084a0e22f222320fb1e0b"
+    }
+  ],
+  "payloadSha256": "e01de6fa081c12c7e481a219d3932e48a2e386f05202e7b8a6e51a0029fad686",
+  "registrationMetadataSha256": "a1b2bd838ee4dd2a961fd93638292dce7bda53deb35166c80c5c54333da16b5d"
+}

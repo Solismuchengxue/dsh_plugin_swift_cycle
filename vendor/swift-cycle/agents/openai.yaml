@@ -1,0 +1,7 @@
+interface:
+  display_name: "Swift Cycle / 快速螺旋"
+  short_description: "Maintain small projects through lightweight, verified cycles"
+  default_prompt: "Use $swift-cycle to establish or review a lightweight maintenance framework for this project."
+
+policy:
+  allow_implicit_invocation: false
