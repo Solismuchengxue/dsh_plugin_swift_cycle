@@ -5,7 +5,7 @@
 - 项目治理：已建立。
 - 适配器源码：本地实现和自动化测试已完成。
 - 打包制品：dry-run 文件合同及临时解包后完整性验证已通过。
-- 隔离 Harness 兼容性：等待单独授权。
+- 隔离 Harness 兼容性：已按固定版本通过验证。
 - 真实用户环境：未安装、未验证。
 - 远程发布：未创建、未授权。
 
@@ -33,5 +33,6 @@
 
 - [已批准设计](docs/superpowers/specs/2026-08-15-deepseek-harness-adapter-design.md)
 - [实施计划](docs/superpowers/plans/2026-08-15-deepseek-harness-adapter.md)
+- [隔离 Harness 兼容性证据](docs/evidence/2026-08-15-dsh-compatibility.md)
 
-兼容性证据只有在取得隔离 Harness 测试授权并实际执行后才进入 `docs/evidence/`；当前本地源码和候选制品验证不能写成 Runtime 兼容证据。
+隔离 Runtime 结论只适用于上述固定 Harness commit 和 Skill API 版本；真实用户 profile、实际消费者及远程分发仍需各自验证。

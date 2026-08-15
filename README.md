@@ -11,9 +11,9 @@
 - 本地源码验证：已通过
 - 候选制品预检：已通过 dry-run 文件合同和临时解包后完整性验证
 - 分发状态：尚未创建远程仓库或 Release
-- Harness Runtime 兼容性：尚未执行隔离验证
+- Harness Runtime 兼容性：已通过固定版本的隔离验证；真实用户 profile 仍未验证
 
-以上本地结果只证明源码与候选制品符合本仓库合同，不能证明真实 Harness profile 已安装、加载或生效。
+以上结果证明源码、候选制品和固定版本的隔离 Harness Runtime 符合本仓库合同，不能证明真实 Harness profile 已安装、加载或生效。
 
 ## 包含的 Swift Cycle 能力
 
@@ -88,7 +88,7 @@ node scripts/verify-upstream.mjs --source "<path-to-swift-cycle-skill-directory>
 3. 隔离 Harness Runtime 能注册和显式调用；
 4. 真实用户 profile 已安装并由实际消费者使用。
 
-当前只计划完成前两层，并停在隔离 Harness 验证之前。
+当前已完成前三层；真实用户 profile 和实际消费者仍未安装、未验证。隔离验证证据见 [2026-08-15 DSH 兼容性验证](docs/evidence/2026-08-15-dsh-compatibility.md)。
 
 ## 权威来源
 
