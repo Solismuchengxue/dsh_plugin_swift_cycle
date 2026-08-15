@@ -23,6 +23,12 @@ function sha256(value) {
   return createHash('sha256').update(value).digest('hex')
 }
 
+function compareCodePoints(left, right) {
+  if (left < right) return -1
+  if (left > right) return 1
+  return 0
+}
+
 function normalizeSnapshotPath(value) {
   if (
     typeof value !== 'string'
@@ -82,8 +88,8 @@ function validateLock(lock) {
     return { path: normalizedPath, sha256: entry.sha256.toLowerCase() }
   })
 
-  const actualPaths = files.map((entry) => entry.path).sort((a, b) => a.localeCompare(b))
-  const requiredPaths = [...expectedFiles].sort((a, b) => a.localeCompare(b))
+  const actualPaths = files.map((entry) => entry.path).sort(compareCodePoints)
+  const requiredPaths = [...expectedFiles].sort(compareCodePoints)
   if (JSON.stringify(actualPaths) !== JSON.stringify(requiredPaths)) {
     throw new Error('upstream lock file set mismatch')
   }
@@ -112,7 +118,7 @@ async function listSnapshotFiles(root, relativeDirectory = '') {
     }
   }
 
-  return files.sort((a, b) => a.localeCompare(b))
+  return files.sort(compareCodePoints)
 }
 
 async function verifySnapshotRoot(snapshotRoot, lock) {
@@ -120,7 +126,7 @@ async function verifySnapshotRoot(snapshotRoot, lock) {
   const actualFiles = await listSnapshotFiles(snapshotRoot)
   const lockedFiles = normalizedLock.files
     .map((entry) => entry.path)
-    .sort((a, b) => a.localeCompare(b))
+    .sort(compareCodePoints)
 
   if (JSON.stringify(actualFiles) !== JSON.stringify(lockedFiles)) {
     throw new Error('snapshot file set mismatch')
@@ -162,8 +168,8 @@ export function aggregateHash(entries) {
     return { path: normalizedPath, sha256: entry.sha256.toLowerCase() }
   })
   normalizedEntries.sort((left, right) => {
-    const byLowercasePath = left.path.toLowerCase().localeCompare(right.path.toLowerCase())
-    return byLowercasePath || left.path.localeCompare(right.path)
+    const byLowercasePath = compareCodePoints(left.path.toLowerCase(), right.path.toLowerCase())
+    return byLowercasePath || compareCodePoints(left.path, right.path)
   })
   const payload = normalizedEntries
     .map((entry) => `${entry.path}\0${entry.sha256}\n`)

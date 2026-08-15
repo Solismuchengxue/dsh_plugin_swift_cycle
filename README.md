@@ -75,7 +75,7 @@ npm run pack:dry-run
 node scripts/verify-upstream.mjs --source "<path-to-swift-cycle-skill-directory>"
 ```
 
-普通插件加载和用户安装不会访问网络，不读取凭据，也不会修改用户级 Skill 目录。
+适配器加载和运行时不会访问网络，不读取凭据，也不会修改用户级 Skill 目录。通过 GitHub 安装时，分发工具仍需要联网获取用户指定的固定提交。
 
 ## 同名 Skill 与证据边界
 
