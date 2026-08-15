@@ -43,13 +43,13 @@ Swift Cycle 不进入模型可隐式选择的 Skill 目录。用户需要显式�
 
 ## 安装约定
 
-首版只计划支持固定 GitHub commit 安装，不发布 npm 包。远程仓库和适配器 commit 尚未创建，因此当前不能执行下面的示例：
+首版只支持固定 GitHub commit 安装，不发布 npm 包。每个 GitHub Release 的说明会提供对应的完整 40 位 commit 和可复制命令；不要使用未固定的默认分支或可移动 tag。远程仓库尚未创建，因此当前不能执行下面的示例：
 
 ```powershell
-dsh plugin --profile web add "github:Solismuchengxue/dsh_plugin_swift_cycle#FULL_40_CHARACTER_COMMIT_SHA"
+dsh plugin --profile web add "github:Solismuchengxue/dsh_plugin_swift_cycle#<FULL_40_CHARACTER_COMMIT_SHA>"
 ```
 
-发布后必须把 `FULL_40_CHARACTER_COMMIT_SHA` 替换为 Release 对应的完整 40 位 commit，不能使用未固定的默认分支。
+发布后应从对应 Release Notes 复制完整命令。Release tag 用于版本发现，完整 commit 才是安装身份。
 
 安装或改动 profile 前先检查合成配置：
 

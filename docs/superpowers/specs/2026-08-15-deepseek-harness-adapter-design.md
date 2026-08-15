@@ -39,7 +39,7 @@
 
 | 项目 | 身份 |
 | --- | --- |
-| 本地仓库 | `F:\70_Infrastructure_and_Operations\prompt_engineering\dsh_plugin_swift_cycle` |
+| 本地仓库 | `<REPOSITORY_ROOT>` |
 | 拟创建的 GitHub 仓库 | `Solismuchengxue/dsh_plugin_swift_cycle` |
 | 包名 | `dsh-plugin-swift-cycle` |
 | 适配器版本 | `0.1.0` |

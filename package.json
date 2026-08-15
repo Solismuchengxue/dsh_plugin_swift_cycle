@@ -4,6 +4,22 @@
   "description": "DeepSeek Harness adapter for the Swift Cycle governance skill.",
   "license": "MIT",
   "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Solismuchengxue/dsh_plugin_swift_cycle.git"
+  },
+  "homepage": "https://github.com/Solismuchengxue/dsh_plugin_swift_cycle#readme",
+  "bugs": {
+    "url": "https://github.com/Solismuchengxue/dsh_plugin_swift_cycle/issues"
+  },
+  "keywords": [
+    "dsh-plugin",
+    "dsh",
+    "deepseek-harness",
+    "agent-skills",
+    "project-governance",
+    "swift-cycle"
+  ],
   "type": "module",
   "main": "index.js",
   "files": [

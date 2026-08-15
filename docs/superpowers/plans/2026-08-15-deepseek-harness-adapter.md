@@ -10,8 +10,8 @@
 
 ## 全局约束
 
-- 只允许修改 `F:\70_Infrastructure_and_Operations\prompt_engineering\dsh_plugin_swift_cycle`。
-- 上游仓库 `F:\70_Infrastructure_and_Operations\prompt_engineering\skill_swift_cycle` 只读；上游身份固定为 tag `v1.2.0`、commit `af3c5ddafba516c304613ea69081118fc234add7`。
+- 只允许修改 `<REPOSITORY_ROOT>`。
+- 上游仓库 `<SWIFT_CYCLE_REPOSITORY>` 只读；上游身份固定为 tag `v1.2.0`、commit `af3c5ddafba516c304613ea69081118fc234add7`。
 - 适配器包名为 `dsh-plugin-swift-cycle`，首版版本为 `0.1.0`，注册 Skill 名为 `swift-cycle`。
 - 不创建固定状态 Schema、`PROJECT_STATE.md`、运行时下载、凭据集成、模型配置或安装时构建脚本。
 - 必须强制 `modelInvocable: false`、`userInvocable: true`；不得依赖上游 `agents/openai.yaml` 解释 DSH 调用策略。
@@ -300,7 +300,7 @@ export async function verifyPackagedSnapshot(options = {}) {}
 
 ```powershell
 node scripts/verify-upstream.mjs
-node scripts/verify-upstream.mjs --source "F:\70_Infrastructure_and_Operations\prompt_engineering\skill_swift_cycle\skills\swift-cycle"
+node scripts/verify-upstream.mjs --source "<SWIFT_CYCLE_SKILL_DIRECTORY>"
 ```
 
 第一种仅离线验证随包快照；第二种额外核对显式提供的上游目录。脚本不得访问网络，也不得写入 vendor。
@@ -310,7 +310,7 @@ node scripts/verify-upstream.mjs --source "F:\70_Infrastructure_and_Operations\p
 ```powershell
 node --test tests/upstream-integrity.test.mjs
 npm run verify:upstream
-node scripts/verify-upstream.mjs --source "F:\70_Infrastructure_and_Operations\prompt_engineering\skill_swift_cycle\skills\swift-cycle"
+node scripts/verify-upstream.mjs --source "<SWIFT_CYCLE_SKILL_DIRECTORY>"
 git diff --check
 git add -- index.js upstream.lock.json vendor scripts/verify-upstream.mjs tests/upstream-integrity.test.mjs
 git diff --cached --check
@@ -488,7 +488,7 @@ git commit -m "docs: add DSH installation and package contract"
 ```powershell
 npm test
 npm run verify:upstream
-node scripts/verify-upstream.mjs --source "F:\70_Infrastructure_and_Operations\prompt_engineering\skill_swift_cycle\skills\swift-cycle"
+node scripts/verify-upstream.mjs --source "<SWIFT_CYCLE_SKILL_DIRECTORY>"
 npm run pack:dry-run
 git diff --check
 git status --short
@@ -499,7 +499,7 @@ git status --short
 ### 步骤 2：审计禁止项
 
 ```powershell
-rg -n '"(preinstall|install|postinstall|prepare)"|dependencies|child_process|exec\(|spawn\(|fetch\(|https?://|credential|token|secret|C:\\Users|F:\\' package.json index.js scripts tests vendor README.md
+rg -n '"(preinstall|install|postinstall|prepare)"|dependencies|child_process|exec\(|spawn\(|fetch\(|https?://|credential|token|secret' package.json index.js scripts tests vendor README.md
 ```
 
 逐条分类结果：
@@ -511,8 +511,8 @@ rg -n '"(preinstall|install|postinstall|prepare)"|dependencies|child_process|exe
 ### 步骤 3：确认上游仓库未被修改
 
 ```powershell
-git -C "F:\70_Infrastructure_and_Operations\prompt_engineering\skill_swift_cycle" status --short
-git -C "F:\70_Infrastructure_and_Operations\prompt_engineering\skill_swift_cycle" rev-parse HEAD
+git -C "<SWIFT_CYCLE_REPOSITORY>" status --short
+git -C "<SWIFT_CYCLE_REPOSITORY>" rev-parse HEAD
 ```
 
 预期：clean，HEAD 仍为 `af3c5ddafba516c304613ea69081118fc234add7`。
@@ -539,7 +539,7 @@ git commit -m "fix: close adapter preflight gaps"
 
 ### 步骤 1：建立隔离边界
 
-- 使用临时目录作为 DSH home/profile；不得使用或修改 `C:\Users\smile\.dsh`。
+- 使用临时目录作为 DSH home/profile；不得使用或修改 `<REAL_DSH_HOME>`。
 - 固定官方 Harness commit `47f943859bef60e4160492346772ded9b24f765a` 和 `@deepseek-ai/dsh-skill` `0.1.0-rc.5`。
 - 记录 Node、npm、DSH 和适配器 commit；不记录凭据、用户业务数据或真实项目路径。
 - 开始前验证临时目录解析结果；清理时只删除这个精确临时目录，并再次验证路径不含 reparse point 或越界。

@@ -19,7 +19,7 @@
 
 适配器携带只读的上游快照，通过 DeepSeek Harness 的 `ctx.skills.register()` 注册 `swift-cycle`。上游身份和文件由 `upstream.lock.json` 及 SHA-256 校验约束；Harness 专用调用策略位于快照之外。
 
-首版使用固定 GitHub commit 安装，不发布 npm 包，不在运行时访问网络，也不使用凭据或安装脚本。
+首版使用固定 GitHub commit 安装，不发布 npm 包，不在运行时访问网络，也不使用凭据或安装脚本。Release tag 负责版本发现，Release Notes 负责公布不可变的完整安装 commit。
 
 ## 关键边界
 
