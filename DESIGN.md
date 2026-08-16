@@ -6,9 +6,9 @@
 - 适配器源码：本地实现和自动化测试已完成。
 - 打包制品：dry-run 文件合同及临时解包后完整性验证已通过。
 - 隔离 Harness 兼容性：已按固定版本通过验证。
-- 真实用户环境：固定发布 commit 已安装到真实 Web profile，并通过空工作区和本仓库非空 Git 工作区中的只读显式调用烟测。
-- GitHub 分发：`v0.1.0` 已发布，固定 commit 的隔离安装已验证。
-- npm 分发：`v0.1.1` 发布候选已建立；以 Registry 发布和隔离安装证据作为关闭条件。
+- 真实用户环境：GitHub `v0.1.0` 固定发布 commit 已安装到真实 Web profile，并通过空工作区和本仓库非空 Git 工作区中的只读显式调用烟测；npm `v0.1.1` 的真实 consumer 仍未验证。
+- GitHub 分发：`v0.1.0` 与 `v0.1.1` 已发布；`v0.1.1` tag 精确指向发布 commit。
+- npm 分发：`v0.1.1` 已公开发布，Registry 身份与候选制品一致，并通过 rc.6 隔离安装、注册、重试、卸载和清理验证。
 
 以上结论彼此独立；本项目不使用单一总体状态替代各层证据。
 
@@ -31,6 +31,7 @@
 - 兼容性基线：`deepseek-ai/deepseek-harness` commit `47f943859bef60e4160492346772ded9b24f765a`，`@deepseek-ai/dsh-skill` `0.1.0-rc.5`。
 - 真实 consumer 基线：`@deepseek-ai/dsh` `0.1.0-rc.6`，适配器固定发布 commit `c09326cb44ab8dbda67f82535fca4efe85c0444b`。
 - 非空 Git 治理基线：本仓库 HEAD `582f4ee258a4cb9b09276d2d18f73b72c20d731c`，`Read Only` 权限下单次用户显式调用。
+- npm 分发基线：`dsh-plugin-swift-cycle@0.1.1`，发布 commit `d44bee70c109bb1d772d26ee790d6de9aadce9cc`，Registry integrity `sha512-UchV9FYEg3fqw67nAcvjMy7Hg41S2ytlMMBrFnI2NvybRKrWOGPAzfKvs4+0nWUPVpPc6wBox51Jj90/+Z/bLA==`。
 
 ## 详细文档
 
@@ -41,4 +42,4 @@
 - [非空 Git 项目治理烟测证据](docs/evidence/2026-08-16-real-git-project-governance-smoke.md)
 - [npm v0.1.1 发布证据](docs/evidence/2026-08-16-npm-release-v0.1.1.md)
 
-隔离 Runtime 与 GitHub 固定 commit 安装结论只适用于对应的固定 Harness 身份；真实 Web consumer 结论只覆盖 `0.1.0-rc.6`、上述固定适配器 commit、一个空的非 Git 工作区和本仓库在上述 HEAD 的一次只读治理调用。其他项目、写入流程和生产治理仍未验证。
+隔离 Runtime 与各分发身份的安装结论只适用于对应的固定 Harness 和适配器身份；真实 Web consumer 结论只覆盖 `0.1.0-rc.6`、GitHub `v0.1.0` 固定适配器 commit、一个空的非 Git 工作区和本仓库在上述 HEAD 的一次只读治理调用。npm `v0.1.1` 的真实 consumer、其他项目、写入流程和生产治理仍未验证。
