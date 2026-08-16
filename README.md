@@ -11,9 +11,9 @@
 - 本地源码验证：已通过
 - 候选制品预检：已通过 dry-run 文件合同和临时解包后完整性验证
 - 分发状态：GitHub `v0.1.0` 已发布；npm 未发布
-- Harness Runtime 兼容性：已通过固定版本的隔离验证、GitHub 固定 commit 安装验证，以及 `0.1.0-rc.6` 真实 Web profile 的一次只读显式调用烟测
+- Harness Runtime 兼容性：已通过固定版本的隔离验证、GitHub 固定 commit 安装验证，以及 `0.1.0-rc.6` 真实 Web profile 中空工作区和一个非空 Git 项目的只读显式调用烟测
 
-以上结果证明源码、候选制品、固定版本的隔离 Harness Runtime，以及本次真实 Web consumer 调用符合已验证边界；非空 Git 项目中的实际治理效果仍未验证。
+以上结果证明源码、候选制品、固定版本的隔离 Harness Runtime，以及两个已记录工作区中的真实 Web consumer 调用符合已验证边界；不代表其他项目、写入流程或生产治理已经验证。
 
 ## 包含的 Swift Cycle 能力
 
@@ -88,7 +88,7 @@ node scripts/verify-upstream.mjs --source "<path-to-swift-cycle-skill-directory>
 3. 隔离 Harness Runtime 能注册和显式调用；
 4. 真实用户 profile 已安装并由实际消费者使用。
 
-当前四层均已有对应证据；真实 consumer 证据仅覆盖空的非 Git 工作区，不代表非空项目治理效果已经验证。参见 [2026-08-15 DSH 隔离兼容性验证](docs/evidence/2026-08-15-dsh-compatibility.md)与 [2026-08-16 真实 Web consumer 烟测](docs/evidence/2026-08-16-real-web-consumer-smoke.md)。
+当前四层均已有对应证据；真实 consumer 证据覆盖空的非 Git 工作区和本仓库非空 Git 工作区中的各一次只读调用，不代表其他项目、写入流程或生产治理已经验证。参见 [2026-08-15 DSH 隔离兼容性验证](docs/evidence/2026-08-15-dsh-compatibility.md)、[2026-08-16 真实 Web consumer 烟测](docs/evidence/2026-08-16-real-web-consumer-smoke.md)与 [2026-08-16 非空 Git 项目治理烟测](docs/evidence/2026-08-16-real-git-project-governance-smoke.md)。
 
 ## 权威来源
 
