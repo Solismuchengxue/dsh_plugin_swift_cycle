@@ -11,9 +11,9 @@
 - 本地源码验证：已通过
 - 候选制品预检：已通过 dry-run 文件合同和临时解包后完整性验证
 - 分发状态：GitHub `v0.1.0` 已发布；npm 未发布
-- Harness Runtime 兼容性：已通过固定版本的隔离验证，并已通过 GitHub 固定 commit 隔离安装；真实用户 profile 仍未验证
+- Harness Runtime 兼容性：已通过固定版本的隔离验证、GitHub 固定 commit 安装验证，以及 `0.1.0-rc.6` 真实 Web profile 的一次只读显式调用烟测
 
-以上结果证明源码、候选制品和固定版本的隔离 Harness Runtime 符合本仓库合同，不能证明真实 Harness profile 已安装、加载或生效。
+以上结果证明源码、候选制品、固定版本的隔离 Harness Runtime，以及本次真实 Web consumer 调用符合已验证边界；非空 Git 项目中的实际治理效果仍未验证。
 
 ## 包含的 Swift Cycle 能力
 
@@ -57,7 +57,7 @@ dsh plugin --profile web add "github:Solismuchengxue/dsh_plugin_swift_cycle#c093
 dsh --profile web --dump-config
 ```
 
-本项目当前没有授权安装到任何真实 profile。
+公开发布 commit 已在一个真实 Web profile 中完成安装、加载和只读调用烟测。其他 profile 的安装仍需用户单独授权。
 
 ## 本地验证
 
@@ -88,7 +88,7 @@ node scripts/verify-upstream.mjs --source "<path-to-swift-cycle-skill-directory>
 3. 隔离 Harness Runtime 能注册和显式调用；
 4. 真实用户 profile 已安装并由实际消费者使用。
 
-当前已完成前三层；真实用户 profile 和实际消费者仍未安装、未验证。隔离验证证据见 [2026-08-15 DSH 兼容性验证](docs/evidence/2026-08-15-dsh-compatibility.md)。
+当前四层均已有对应证据；真实 consumer 证据仅覆盖空的非 Git 工作区，不代表非空项目治理效果已经验证。参见 [2026-08-15 DSH 隔离兼容性验证](docs/evidence/2026-08-15-dsh-compatibility.md)与 [2026-08-16 真实 Web consumer 烟测](docs/evidence/2026-08-16-real-web-consumer-smoke.md)。
 
 ## 权威来源
 
