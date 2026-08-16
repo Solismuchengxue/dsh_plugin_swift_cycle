@@ -55,7 +55,7 @@ test('packaged snapshot verifies the exact Swift Cycle v1.2.0 identity', async (
   const { verifyPackagedSnapshot } = await loadImplementation()
   const result = await verifyPackagedSnapshot({ packageRoot: repositoryRoot })
 
-  assert.equal(result.lock.adapter.version, '0.1.0')
+  assert.equal(result.lock.adapter.version, '0.1.1')
   assert.equal(result.lock.upstream.tag, 'v1.2.0')
   assert.equal(result.lock.upstream.commit, 'af3c5ddafba516c304613ea69081118fc234add7')
   assert.equal(result.lock.upstream.skillName, 'swift-cycle')

@@ -7,7 +7,8 @@
 - 打包制品：dry-run 文件合同及临时解包后完整性验证已通过。
 - 隔离 Harness 兼容性：已按固定版本通过验证。
 - 真实用户环境：固定发布 commit 已安装到真实 Web profile，并通过空工作区和本仓库非空 Git 工作区中的只读显式调用烟测。
-- GitHub 分发：`v0.1.0` 已发布，固定 commit 的隔离安装已验证；npm 未发布。
+- GitHub 分发：`v0.1.0` 已发布，固定 commit 的隔离安装已验证。
+- npm 分发：`v0.1.1` 发布候选已建立；以 Registry 发布和隔离安装证据作为关闭条件。
 
 以上结论彼此独立；本项目不使用单一总体状态替代各层证据。
 
@@ -19,13 +20,13 @@
 
 适配器携带只读的上游快照，通过 DeepSeek Harness 的 `ctx.skills.register()` 注册 `swift-cycle`。上游身份和文件由 `upstream.lock.json` 及 SHA-256 校验约束；Harness 专用调用策略位于快照之外。
 
-首版使用固定 GitHub commit 安装，不发布 npm 包，不在运行时访问网络，也不使用凭据或安装脚本。Release tag 负责版本发现，Release Notes 负责公布不可变的完整安装 commit。
+首版使用固定 GitHub commit 安装。`v0.1.1` 增加 npm 固定版本分发，同时保持无运行时依赖、无安装生命周期脚本、运行时不访问网络且不使用凭据。Release tag 负责版本发现；npm 固定版本和 GitHub 完整 commit 分别作为对应渠道的不可变安装身份。
 
 ## 关键边界
 
 - 权威治理内容：Swift Cycle 上游仓库及其 v1.2.0 Release。
 - Harness 适配行为：本仓库的入口、bundle patch、锁文件和兼容性证据。
-- 交付层次：Git 源码 → 本地 pack 候选制品 → 隔离 Harness runtime → 真实用户 profile/consumer。
+- 交付层次：Git 源码 → 本地 pack 候选制品 → npm/GitHub 分发制品 → 隔离 Harness runtime → 真实用户 profile/consumer。
 - 调用策略：`modelInvocable: false`、`userInvocable: true`。
 - 兼容性基线：`deepseek-ai/deepseek-harness` commit `47f943859bef60e4160492346772ded9b24f765a`，`@deepseek-ai/dsh-skill` `0.1.0-rc.5`。
 - 真实 consumer 基线：`@deepseek-ai/dsh` `0.1.0-rc.6`，适配器固定发布 commit `c09326cb44ab8dbda67f82535fca4efe85c0444b`。
@@ -38,5 +39,6 @@
 - [隔离 Harness 兼容性证据](docs/evidence/2026-08-15-dsh-compatibility.md)
 - [真实 Web consumer 烟测证据](docs/evidence/2026-08-16-real-web-consumer-smoke.md)
 - [非空 Git 项目治理烟测证据](docs/evidence/2026-08-16-real-git-project-governance-smoke.md)
+- [npm v0.1.1 发布证据](docs/evidence/2026-08-16-npm-release-v0.1.1.md)
 
 隔离 Runtime 与 GitHub 固定 commit 安装结论只适用于对应的固定 Harness 身份；真实 Web consumer 结论只覆盖 `0.1.0-rc.6`、上述固定适配器 commit、一个空的非 Git 工作区和本仓库在上述 HEAD 的一次只读治理调用。其他项目、写入流程和生产治理仍未验证。

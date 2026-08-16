@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-swift-cycle",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "DeepSeek Harness adapter for the Swift Cycle governance skill.",
   "license": "MIT",
   "private": false,

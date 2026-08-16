@@ -14,7 +14,7 @@ test('package manifest exposes the minimal DeepSeek Harness bundle contract', as
   const manifest = await readJson('package.json')
 
   assert.equal(manifest.name, 'dsh-plugin-swift-cycle')
-  assert.equal(manifest.version, '0.1.0')
+  assert.equal(manifest.version, '0.1.1')
   assert.equal(manifest.private, false)
   assert.equal(manifest.type, 'module')
   assert.equal(manifest.main, 'index.js')

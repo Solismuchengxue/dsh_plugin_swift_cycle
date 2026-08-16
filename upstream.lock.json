@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "adapter": {
     "name": "dsh-plugin-swift-cycle",
-    "version": "0.1.0"
+    "version": "0.1.1"
   },
   "upstream": {
     "repository": "https://github.com/Solismuchengxue/skill_swift_cycle",
@@ -25,5 +25,5 @@
     }
   ],
   "payloadSha256": "e01de6fa081c12c7e481a219d3932e48a2e386f05202e7b8a6e51a0029fad686",
-  "registrationMetadataSha256": "a1b2bd838ee4dd2a961fd93638292dce7bda53deb35166c80c5c54333da16b5d"
+  "registrationMetadataSha256": "7cc9b1dc3d6cee793c9915edbceb43fc9d6bc3c6f91ac5ab6b1839da4830dd3b"
 }

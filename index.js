@@ -53,7 +53,7 @@ function validateLock(lock) {
   if (lock.schemaVersion !== 1) {
     throw new Error('unsupported upstream lock schema')
   }
-  if (lock.adapter?.name !== 'dsh-plugin-swift-cycle' || lock.adapter?.version !== '0.1.0') {
+  if (lock.adapter?.name !== 'dsh-plugin-swift-cycle' || lock.adapter?.version !== '0.1.1') {
     throw new Error('unexpected adapter identity in upstream lock')
   }
   if (
