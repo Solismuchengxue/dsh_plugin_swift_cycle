@@ -10,7 +10,7 @@
 - 上游整体 SHA-256：`e01de6fa081c12c7e481a219d3932e48a2e386f05202e7b8a6e51a0029fad686`
 - 本地源码验证：已通过
 - 候选制品预检：已通过 dry-run 文件合同和临时解包后完整性验证
-- 分发版本：GitHub `v0.1.0` 固定提交与 npm `0.1.1` 固定版本
+- 分发状态：GitHub `v0.1.1` 与 npm `0.1.1` 已发布；`v0.1.0` 保留为历史版本
 - Harness Runtime 兼容性：已通过固定版本的隔离验证、GitHub 固定 commit 安装验证，以及 `0.1.0-rc.6` 真实 Web profile 中空工作区和一个非空 Git 项目的只读显式调用烟测
 
 以上结果证明源码、候选制品、固定版本的隔离 Harness Runtime，以及两个已记录工作区中的真实 Web consumer 调用符合已验证边界；不代表其他项目、写入流程或生产治理已经验证。
@@ -43,19 +43,25 @@ Swift Cycle 不进入模型可隐式选择的 Skill 目录。用户需要显式�
 
 ## 安装
 
-推荐通过 npm 安装固定版本：
+日常安装使用 npm `latest`：
+
+```powershell
+dsh plugin --profile web add dsh-plugin-swift-cycle
+```
+
+需要固定、可重放的安装身份时指定版本：
 
 ```powershell
 dsh plugin --profile web add dsh-plugin-swift-cycle@0.1.1
 ```
 
-npm 版本不可变，适合作为简短、可重放的安装身份。GitHub `v0.1.0` 对应的完整 40 位 commit 仍可作为首版兼容安装来源：
+npm 固定版本不可变。需要直接从 GitHub 安装同一版本时，使用 `v0.1.1` 对应的完整 40 位 commit：
 
 ```powershell
-dsh plugin --profile web add "github:Solismuchengxue/dsh_plugin_swift_cycle#c09326cb44ab8dbda67f82535fca4efe85c0444b"
+dsh plugin --profile web add "github:Solismuchengxue/dsh_plugin_swift_cycle#d44bee70c109bb1d772d26ee790d6de9aadce9cc"
 ```
 
-GitHub 固定提交命令已在临时隔离 `DSH_HOME` 中验证。各版本的安装身份和验证边界以对应 [GitHub Release](https://github.com/Solismuchengxue/dsh_plugin_swift_cycle/releases) 为准；不要使用未固定的默认分支或可移动 tag。
+npm `0.1.1` 和 GitHub 固定提交均已在临时隔离 `DSH_HOME` 中验证。各版本的安装身份和验证边界以对应 [GitHub Release](https://github.com/Solismuchengxue/dsh_plugin_swift_cycle/releases/tag/v0.1.1) 为准；不要把未固定的默认分支用于可重放安装。
 
 安装或改动 profile 前先检查合成配置：
 
