@@ -11,7 +11,7 @@
 - 本地源码验证：已通过
 - 候选制品预检：已通过 dry-run 文件合同和临时解包后完整性验证
 - 分发状态：GitHub `v0.1.1` 与 npm `0.1.1` 已发布；`v0.1.0` 保留为历史版本
-- Harness Runtime 兼容性：已通过固定版本的隔离验证、GitHub 固定 commit 安装验证，以及 `0.1.0-rc.6` 真实 Web profile 中空工作区和一个非空 Git 项目的只读显式调用烟测
+- Harness Runtime 兼容性：已通过固定版本的隔离验证、GitHub 固定 commit 安装验证，以及 `0.1.0-rc.6` 真实 Web profile 中 GitHub `v0.1.0` 与 npm `0.1.1` 的只读显式调用烟测
 
 以上结果证明源码、候选制品、固定版本的隔离 Harness Runtime，以及两个已记录工作区中的真实 Web consumer 调用符合已验证边界；不代表其他项目、写入流程或生产治理已经验证。
 
@@ -69,7 +69,7 @@ npm `0.1.1` 和 GitHub 固定提交均已在临时隔离 `DSH_HOME` 中验证。
 dsh --profile web --dump-config
 ```
 
-公开发布 commit 已在一个真实 Web profile 中完成安装、加载和只读调用烟测。其他 profile 的安装仍需用户单独授权。
+GitHub `v0.1.0` 固定 commit 与 npm `0.1.1` 均已在同一个真实 Web profile 中完成安装、加载和只读调用烟测。其他 profile 的安装仍需用户单独授权。
 
 ## 本地验证
 
@@ -100,7 +100,7 @@ node scripts/verify-upstream.mjs --source "<path-to-swift-cycle-skill-directory>
 3. 隔离 Harness Runtime 能注册和显式调用；
 4. 真实用户 profile 已安装并由实际消费者使用。
 
-当前四层均已有对应证据；真实 consumer 证据覆盖空的非 Git 工作区和本仓库非空 Git 工作区中的各一次只读调用，不代表其他项目、写入流程或生产治理已经验证。参见 [2026-08-15 DSH 隔离兼容性验证](docs/evidence/2026-08-15-dsh-compatibility.md)、[2026-08-16 真实 Web consumer 烟测](docs/evidence/2026-08-16-real-web-consumer-smoke.md)与 [2026-08-16 非空 Git 项目治理烟测](docs/evidence/2026-08-16-real-git-project-governance-smoke.md)。
+当前四层均已有对应证据；真实 consumer 证据覆盖 GitHub `v0.1.0` 在空的非 Git 工作区与本仓库中的只读调用，以及 npm `0.1.1` 在本仓库中的一次只读调用，不代表其他项目、写入流程或生产治理已经验证。参见 [2026-08-15 DSH 隔离兼容性验证](docs/evidence/2026-08-15-dsh-compatibility.md)、[2026-08-16 真实 Web consumer 烟测](docs/evidence/2026-08-16-real-web-consumer-smoke.md)、[2026-08-16 非空 Git 项目治理烟测](docs/evidence/2026-08-16-real-git-project-governance-smoke.md)与 [2026-08-20 npm v0.1.1 真实 consumer 烟测](docs/evidence/2026-08-20-real-npm-v0.1.1-consumer-smoke.md)。
 
 ## 权威来源
 

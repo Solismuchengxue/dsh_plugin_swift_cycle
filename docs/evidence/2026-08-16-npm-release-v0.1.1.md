@@ -6,7 +6,7 @@
 - npm Registry：`PASS`
 - 隔离安装：`PASS`
 - GitHub Release：`PASS`
-- 真实 profile/consumer：`NOT_VERIFIED`
+- 真实 profile/consumer：`PASS`
 
 各状态独立维护；候选制品通过不能替代 Registry、安装运行态或 Release 证据。
 
@@ -26,7 +26,7 @@
 dsh plugin --profile web add dsh-plugin-swift-cycle@0.1.1
 ```
 
-验证必须在临时隔离 `DSH_HOME` 中完成，不访问真实 profile、凭据或模型。
+发布阶段的隔离验证必须在临时 `DSH_HOME` 中完成，不访问真实 profile、凭据或模型。后续真实 consumer 验证独立记录，不改写本节历史边界。
 
 ## 发布前检查
 
@@ -63,6 +63,10 @@ dsh plugin --profile web add dsh-plugin-swift-cycle@0.1.1
 
 ## 发布关闭证据
 
-源码、候选制品、npm Registry、隔离安装运行态和 GitHub Release 已分别关闭。验证未读取或输出 npm 凭据，未访问真实 DSH profile，未调用模型。
+源码、候选制品、npm Registry、隔离安装运行态和 GitHub Release 已分别关闭。发布阶段验证未读取或输出 npm 凭据，未访问真实 DSH profile，未调用模型。
 
-npm `v0.1.1` 的真实 Web profile/consumer 使用状态保持 `NOT_VERIFIED`；历史真实 consumer 证据对应 GitHub `v0.1.0` 固定 commit，不能自动晋升为本版本证据。
+## 真实 Web profile/consumer
+
+npm `v0.1.1` 已于 2026-08-20 在真实 Web profile 中完成精确安装、Skill 可见性检查和一次 `Read Only` 的 `/swift-cycle` 显式模型调用，状态由 `NOT_VERIFIED` 更新为 `PASS`。历史 GitHub `v0.1.0` consumer 证据保持原有身份，本次结论由独立的 [npm v0.1.1 真实 consumer 烟测证据](2026-08-20-real-npm-v0.1.1-consumer-smoke.md)支持。
+
+该结论仅覆盖 `@deepseek-ai/dsh` `0.1.0-rc.6`、本仓库和本次唯一只读调用，不自动证明其他 profile、项目、写入流程或生产治理。
