@@ -1,7 +1,7 @@
 .worktrees/
-TODO.md
-DEVLOG.md
-METHODOLOGY.md
+/TODO.md
+/DEVLOG.md
+/METHODOLOGY.md
 node_modules/
 coverage/
 *.tgz

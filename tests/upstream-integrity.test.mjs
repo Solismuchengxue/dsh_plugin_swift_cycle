@@ -32,36 +32,76 @@ test('aggregate hash is stable across input order and hash casing', async () => 
   const { aggregateHash } = await loadImplementation()
   const entries = [
     {
-      path: 'references/zh-CN.md',
-      sha256: 'DDEC383EDFA8E419C0B098F6CF6FFC6F5A44C8A4A57084A0E22F222320FB1E0B',
+      path: 'SKILL.md',
+      sha256: '0674BA6D22BBE0867613BB28FAE8759019D88B38B6DEBF326D38C315665968CB',
     },
     {
-      path: 'SKILL.md',
-      sha256: '27CE135DF6ED459A869B10711CFAB431D2772FE806A775B1BC5882692A005B82',
+      path: 'templates/docs/review-packet.md',
+      sha256: '34AC545FF4919F2E98D187241BC29CCCC879B241F17A061EAB8F22407A0CE591',
     },
     {
       path: 'agents/openai.yaml',
       sha256: '2C28493E10C85A7710A5E774844BB0515F606C4506E5E8D5D12FA1BE21107898',
     },
+    {
+      path: 'references/document-profiles.md',
+      sha256: '8DE8D9FA08D1166CD260E4683F06D3D2DC875B48D3152CDBD9C1789AE535C6AF',
+    },
+    {
+      path: 'references/zh-CN.md',
+      sha256: '8E5B2D0F57F577703A294FD96FC1BB13AC7A8F2780FBB290E6CBBC712769B53C',
+    },
+    {
+      path: 'templates/DESIGN.md',
+      sha256: '02C34DA0C1DD7465379C69819F9577C0EDC21B5802C0DA0312B4EC6EC029EDC9',
+    },
+    {
+      path: 'templates/TODO.md',
+      sha256: '4B84B2785F3330297A45447630A91BBB6A4AC945EF7899AE7E43A9C56CED22B9',
+    },
+    {
+      path: 'templates/docs/adr/ADR-NNN.md',
+      sha256: '75CC54769A7389A3A3FB80FDCFD7475AC4BE7ED0449B92DE786A214223AB3C96',
+    },
+    {
+      path: 'templates/docs/adr/README.md',
+      sha256: 'DDDABA5926C7D4AD6D2ED75D640D77D18D35889A271D8784D706A4CCA0DBB158',
+    },
+    {
+      path: 'templates/docs/architecture.md',
+      sha256: '61AEFF94EFD245BA72FC8CD4E0F625627678EE018CE7BA21F578BD41F89FCD83',
+    },
+    {
+      path: 'templates/docs/closeout-packet.md',
+      sha256: 'F299BD76AE377B656761AA46F9722A4988F1EC9223B1096D67EE77B531EB15A3',
+    },
+    {
+      path: 'templates/docs/evaluation.md',
+      sha256: 'F7A07B77C95F19A56B63A06602B54861A49CF131301761FEF1D586FC11E3C48F',
+    },
+    {
+      path: 'templates/docs/operations.md',
+      sha256: 'B36A7A1271D1A1E3C3051B56CF8EEC2885BAF819A0D6EF4B3B1AC19D49B7BD6E',
+    },
   ]
 
   assert.equal(
     aggregateHash(entries),
-    'e01de6fa081c12c7e481a219d3932e48a2e386f05202e7b8a6e51a0029fad686',
+    'fff7094f40c291cc9e03aa96ad271ef110229aba2fb7afa322473949043e4c19',
   )
 })
 
-test('packaged snapshot verifies the exact Swift Cycle v1.2.0 identity', async () => {
+test('packaged snapshot verifies the exact Swift Cycle f383157 candidate identity', async () => {
   const { verifyPackagedSnapshot } = await loadImplementation()
   const result = await verifyPackagedSnapshot({ packageRoot: repositoryRoot })
 
-  assert.equal(result.lock.adapter.version, '0.1.1')
-  assert.equal(result.lock.upstream.tag, 'v1.2.0')
-  assert.equal(result.lock.upstream.commit, 'af3c5ddafba516c304613ea69081118fc234add7')
+  assert.equal(result.lock.adapter.version, '0.1.2')
+  assert.equal(result.lock.upstream.tag, null)
+  assert.equal(result.lock.upstream.commit, 'f383157fce7d179f29de867605d16e01b64366c8')
   assert.equal(result.lock.upstream.skillName, 'swift-cycle')
   assert.equal(
     result.payloadSha256,
-    'e01de6fa081c12c7e481a219d3932e48a2e386f05202e7b8a6e51a0029fad686',
+    'fff7094f40c291cc9e03aa96ad271ef110229aba2fb7afa322473949043e4c19',
   )
 })
 

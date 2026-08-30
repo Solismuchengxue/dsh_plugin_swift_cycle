@@ -42,7 +42,17 @@ test('npm dry-run package contains only the audited adapter runtime files', () =
     'upstream.lock.json',
     'vendor/swift-cycle/SKILL.md',
     'vendor/swift-cycle/agents/openai.yaml',
+    'vendor/swift-cycle/references/document-profiles.md',
     'vendor/swift-cycle/references/zh-CN.md',
+    'vendor/swift-cycle/templates/DESIGN.md',
+    'vendor/swift-cycle/templates/TODO.md',
+    'vendor/swift-cycle/templates/docs/adr/ADR-NNN.md',
+    'vendor/swift-cycle/templates/docs/adr/README.md',
+    'vendor/swift-cycle/templates/docs/architecture.md',
+    'vendor/swift-cycle/templates/docs/closeout-packet.md',
+    'vendor/swift-cycle/templates/docs/evaluation.md',
+    'vendor/swift-cycle/templates/docs/operations.md',
+    'vendor/swift-cycle/templates/docs/review-packet.md',
   ])
 })
 
@@ -71,7 +81,7 @@ test('packed artifact verifies its embedded Swift Cycle snapshot after extractio
 
   assert.equal(
     verified.payloadSha256,
-    'e01de6fa081c12c7e481a219d3932e48a2e386f05202e7b8a6e51a0029fad686',
+    'fff7094f40c291cc9e03aa96ad271ef110229aba2fb7afa322473949043e4c19',
   )
   assert.ok(!license.includes('\r'), 'packed LICENSE must use LF line endings')
 })

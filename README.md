@@ -1,19 +1,19 @@
 # Swift Cycle for DeepSeek Harness
 
-这是 [Swift Cycle](https://github.com/Solismuchengxue/skill_swift_cycle) 的 DeepSeek Harness 适配器。它把锁定的 Swift Cycle v1.2.0 载荷注册为只能由用户显式调用的 Harness Skill。
+这是 [Swift Cycle](https://github.com/Solismuchengxue/skill_swift_cycle) 的 DeepSeek Harness 适配器。它把锁定到精确上游 commit 的 Swift Cycle 载荷注册为只能由用户显式调用的 Harness Skill。
 
 ## 当前状态
 
-- 适配器版本：`0.1.1`
-- 上游版本：`v1.2.0`
-- 上游 commit：`af3c5ddafba516c304613ea69081118fc234add7`
-- 上游整体 SHA-256：`e01de6fa081c12c7e481a219d3932e48a2e386f05202e7b8a6e51a0029fad686`
-- 本地源码验证：已通过
-- 候选制品预检：已通过 dry-run 文件合同和临时解包后完整性验证
+- 适配器源码候选：`0.1.2`（未发布）
+- 上游 tag：无；当前快照锁定未打 tag 的精确 commit
+- 上游 commit：`f383157fce7d179f29de867605d16e01b64366c8`
+- 上游整体 SHA-256：`fff7094f40c291cc9e03aa96ad271ef110229aba2fb7afa322473949043e4c19`
+- 本地源码验证：已通过 18/18 自动化测试和显式上游 checkout 比对
+- 候选制品预检：已通过 13 文件 dry-run 合同和临时解包后完整性验证
 - 分发状态：GitHub `v0.1.1` 与 npm `0.1.1` 已发布；`v0.1.0` 保留为历史版本
 - Harness Runtime 兼容性：已通过固定版本的隔离验证、GitHub 固定 commit 安装验证，以及 `0.1.0-rc.6` 真实 Web profile 中 GitHub `v0.1.0` 与 npm `0.1.1` 的只读显式调用烟测
 
-以上结果证明源码、候选制品、固定版本的隔离 Harness Runtime，以及两个已记录工作区中的真实 Web consumer 调用符合已验证边界；不代表其他项目、写入流程或生产治理已经验证。
+`0.1.2` 当前只证明源码和本地候选制品边界；既有隔离 Runtime 与真实 Web consumer 结论仍只覆盖各自记录的 `0.1.0`/`0.1.1` 身份，不自动转移到该候选版本。
 
 ## 包含的 Swift Cycle 能力
 
@@ -22,6 +22,11 @@
 - Governance Baseline：复杂治理开始前记录可比较的当前基线。
 - Commit Boundary Planning：为多提交工作预先划分单一意图和验证边界。
 - Source/Runtime Boundary：分别验证源码、制品、运行态和实际消费者。
+- Scenario Routing：按任务场景选择最小有效治理路径。
+- Document Profiles：按需使用 `minimal`、`standard` 或 `runtime_integration`，不强制固定目录树。
+- Language Adaptation：分别解析交流语言与文件语言。
+- Freshness and Packet Lifecycle：对齐过期事实并冻结、替代或退役 Review/Closeout Packet。
+- Reusable Failure Learning：只把已确认且可复用的失败防线晋升为共享规则。
 
 完整治理规则以锁定的上游 `SKILL.md` 为准；本 README 不复制 Skill 正文。
 
@@ -43,7 +48,7 @@ Swift Cycle 不进入模型可隐式选择的 Skill 目录。用户需要显式�
 
 ## 安装
 
-日常安装使用 npm `latest`：
+日常安装使用 npm `latest`；当前公开版本仍为 `0.1.1`：
 
 ```powershell
 dsh plugin --profile web add dsh-plugin-swift-cycle
@@ -62,6 +67,8 @@ dsh plugin --profile web add "github:Solismuchengxue/dsh_plugin_swift_cycle#d44b
 ```
 
 npm `0.1.1` 和 GitHub 固定提交均已在临时隔离 `DSH_HOME` 中验证。各版本的安装身份和验证边界以对应 [GitHub Release](https://github.com/Solismuchengxue/dsh_plugin_swift_cycle/releases/tag/v0.1.1) 为准；不要把未固定的默认分支用于可重放安装。
+
+源码候选 `0.1.2` 尚未发布到 npm 或 GitHub Release，也未安装到真实 profile。不要把本仓库工作树或 `main` 当作公开的不可变安装版本。
 
 安装或改动 profile 前先检查合成配置：
 
@@ -100,7 +107,7 @@ node scripts/verify-upstream.mjs --source "<path-to-swift-cycle-skill-directory>
 3. 隔离 Harness Runtime 能注册和显式调用；
 4. 真实用户 profile 已安装并由实际消费者使用。
 
-当前四层均已有对应证据；真实 consumer 证据覆盖 GitHub `v0.1.0` 在空的非 Git 工作区与本仓库中的只读调用，以及 npm `0.1.1` 在本仓库中的一次只读调用，不代表其他项目、写入流程或生产治理已经验证。参见 [2026-08-15 DSH 隔离兼容性验证](docs/evidence/2026-08-15-dsh-compatibility.md)、[2026-08-16 真实 Web consumer 烟测](docs/evidence/2026-08-16-real-web-consumer-smoke.md)、[2026-08-16 非空 Git 项目治理烟测](docs/evidence/2026-08-16-real-git-project-governance-smoke.md)与 [2026-08-20 npm v0.1.1 真实 consumer 烟测](docs/evidence/2026-08-20-real-npm-v0.1.1-consumer-smoke.md)。
+已发布版本的四层各有对应证据；真实 consumer 证据覆盖 GitHub `v0.1.0` 在空的非 Git 工作区与本仓库中的只读调用，以及 npm `0.1.1` 在本仓库中的一次只读调用。未发布的 `0.1.2` 目前只有源码和本地候选制品证据，隔离 Runtime、真实 profile 和 consumer 均为 `NOT_VERIFIED`。参见 [2026-08-15 DSH 隔离兼容性验证](docs/evidence/2026-08-15-dsh-compatibility.md)、[2026-08-16 真实 Web consumer 烟测](docs/evidence/2026-08-16-real-web-consumer-smoke.md)、[2026-08-16 非空 Git 项目治理烟测](docs/evidence/2026-08-16-real-git-project-governance-smoke.md)与 [2026-08-20 npm v0.1.1 真实 consumer 烟测](docs/evidence/2026-08-20-real-npm-v0.1.1-consumer-smoke.md)。
 
 ## 权威来源
 

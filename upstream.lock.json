@@ -2,28 +2,68 @@
   "schemaVersion": 1,
   "adapter": {
     "name": "dsh-plugin-swift-cycle",
-    "version": "0.1.1"
+    "version": "0.1.2"
   },
   "upstream": {
     "repository": "https://github.com/Solismuchengxue/skill_swift_cycle",
-    "tag": "v1.2.0",
-    "commit": "af3c5ddafba516c304613ea69081118fc234add7",
+    "tag": null,
+    "commit": "f383157fce7d179f29de867605d16e01b64366c8",
     "skillName": "swift-cycle"
   },
   "files": [
     {
       "path": "SKILL.md",
-      "sha256": "27ce135df6ed459a869b10711cfab431d2772fe806a775b1bc5882692a005b82"
+      "sha256": "0674ba6d22bbe0867613bb28fae8759019d88b38b6debf326d38c315665968cb"
     },
     {
       "path": "agents/openai.yaml",
       "sha256": "2c28493e10c85a7710a5e774844bb0515f606c4506e5e8d5d12fa1be21107898"
     },
     {
+      "path": "references/document-profiles.md",
+      "sha256": "8de8d9fa08d1166cd260e4683f06d3d2dc875b48d3152cdbd9c1789ae535c6af"
+    },
+    {
       "path": "references/zh-CN.md",
-      "sha256": "ddec383edfa8e419c0b098f6cf6ffc6f5a44c8a4a57084a0e22f222320fb1e0b"
+      "sha256": "8e5b2d0f57f577703a294fd96fc1bb13ac7a8f2780fbb290e6cbbc712769b53c"
+    },
+    {
+      "path": "templates/DESIGN.md",
+      "sha256": "02c34da0c1dd7465379c69819f9577c0edc21b5802c0da0312b4ec6ec029edc9"
+    },
+    {
+      "path": "templates/TODO.md",
+      "sha256": "4b84b2785f3330297a45447630a91bbb6a4ac945ef7899ae7e43a9c56ced22b9"
+    },
+    {
+      "path": "templates/docs/adr/ADR-NNN.md",
+      "sha256": "75cc54769a7389a3a3fb80fdcfd7475ac4be7ed0449b92de786a214223ab3c96"
+    },
+    {
+      "path": "templates/docs/adr/README.md",
+      "sha256": "dddaba5926c7d4ad6d2ed75d640d77d18d35889a271d8784d706a4cca0dbb158"
+    },
+    {
+      "path": "templates/docs/architecture.md",
+      "sha256": "61aeff94efd245ba72fc8cd4e0f625627678ee018ce7ba21f578bd41f89fcd83"
+    },
+    {
+      "path": "templates/docs/closeout-packet.md",
+      "sha256": "f299bd76ae377b656761aa46f9722a4988f1ec9223b1096d67ee77b531eb15a3"
+    },
+    {
+      "path": "templates/docs/evaluation.md",
+      "sha256": "f7a07b77c95f19a56b63a06602b54861a49cf131301761fef1d586fc11e3c48f"
+    },
+    {
+      "path": "templates/docs/operations.md",
+      "sha256": "b36a7a1271d1a1e3c3051b56cf8eec2885baf819a0d6ef4b3b1ac19d49b7bd6e"
+    },
+    {
+      "path": "templates/docs/review-packet.md",
+      "sha256": "34ac545ff4919f2e98d187241bc29cccc879b241f17a061eab8f22407a0ce591"
     }
   ],
-  "payloadSha256": "e01de6fa081c12c7e481a219d3932e48a2e386f05202e7b8a6e51a0029fad686",
-  "registrationMetadataSha256": "7cc9b1dc3d6cee793c9915edbceb43fc9d6bc3c6f91ac5ab6b1839da4830dd3b"
+  "payloadSha256": "fff7094f40c291cc9e03aa96ad271ef110229aba2fb7afa322473949043e4c19",
+  "registrationMetadataSha256": "7d83700b11c800c28d6900a0432e1b694cd207288d2e57ee971f1684ba8c8830"
 }

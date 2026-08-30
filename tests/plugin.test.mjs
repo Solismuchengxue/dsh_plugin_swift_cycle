@@ -77,21 +77,25 @@ test('packaged Skill exposes the exact user-only registration contract', async (
   })
   assert.ok(!skill.content.startsWith('---'))
   for (const marker of [
+    '## Match governance to task size',
+    '## Apply the selected document profile',
+    '## Keep documents readable and fresh',
     '## Establish a governance baseline when needed',
     '## Promote local knowledge',
     '## Separate composite states',
     '### Commit boundaries',
     '## Separate source and runtime claims',
+    '## Freeze and retire packets',
   ]) {
     assert.ok(skill.content.includes(marker), `missing capability marker: ${marker}`)
   }
   assert.deepEqual(skill.metadata, {
     upstreamRepository: 'https://github.com/Solismuchengxue/skill_swift_cycle',
-    upstreamTag: 'v1.2.0',
-    upstreamCommit: 'af3c5ddafba516c304613ea69081118fc234add7',
-    adapterVersion: '0.1.1',
-    payloadSha256: 'e01de6fa081c12c7e481a219d3932e48a2e386f05202e7b8a6e51a0029fad686',
-    registrationMetadataSha256: '7cc9b1dc3d6cee793c9915edbceb43fc9d6bc3c6f91ac5ab6b1839da4830dd3b',
+    upstreamTag: null,
+    upstreamCommit: 'f383157fce7d179f29de867605d16e01b64366c8',
+    adapterVersion: '0.1.2',
+    payloadSha256: 'fff7094f40c291cc9e03aa96ad271ef110229aba2fb7afa322473949043e4c19',
+    registrationMetadataSha256: '7d83700b11c800c28d6900a0432e1b694cd207288d2e57ee971f1684ba8c8830',
   })
 })
 
