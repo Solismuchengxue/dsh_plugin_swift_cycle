@@ -4,16 +4,16 @@
 
 ## 当前状态
 
-- 适配器源码候选：`0.1.2`（未发布）
+- 适配器版本：`0.1.2`（已发布）
 - 上游 tag：无；当前快照锁定未打 tag 的精确 commit
 - 上游 commit：`f383157fce7d179f29de867605d16e01b64366c8`
 - 上游整体 SHA-256：`fff7094f40c291cc9e03aa96ad271ef110229aba2fb7afa322473949043e4c19`
 - 本地源码验证：已通过 18/18 自动化测试和显式上游 checkout 比对
 - 候选制品预检：已通过 13 文件 dry-run 合同和临时解包后完整性验证
-- 分发状态：GitHub `v0.1.1` 与 npm `0.1.1` 已发布；`v0.1.0` 保留为历史版本
+- 分发状态：GitHub `v0.1.2` 与 npm `0.1.2` 已发布；`v0.1.0`、`v0.1.1` 保留为历史版本
 - Harness Runtime 兼容性：已通过固定版本的隔离验证、GitHub 固定 commit 安装验证，以及 `0.1.0-rc.6` 真实 Web profile 中 GitHub `v0.1.0` 与 npm `0.1.1` 的只读显式调用烟测
 
-`0.1.2` 当前只证明源码和本地候选制品边界；既有隔离 Runtime 与真实 Web consumer 结论仍只覆盖各自记录的 `0.1.0`/`0.1.1` 身份，不自动转移到该候选版本。
+`0.1.2` 当前证明源码、候选制品和公共分发身份；既有隔离 Runtime 与真实 Web consumer 结论仍只覆盖各自记录的 `0.1.0`/`0.1.1` 身份，不自动转移到该版本。
 
 ## 包含的 Swift Cycle 能力
 
@@ -48,7 +48,7 @@ Swift Cycle 不进入模型可隐式选择的 Skill 目录。用户需要显式�
 
 ## 安装
 
-日常安装使用 npm `latest`；当前公开版本仍为 `0.1.1`：
+日常安装使用 npm `latest`；当前公开版本为 `0.1.2`：
 
 ```powershell
 dsh plugin --profile web add dsh-plugin-swift-cycle
@@ -57,18 +57,18 @@ dsh plugin --profile web add dsh-plugin-swift-cycle
 需要固定、可重放的安装身份时指定版本：
 
 ```powershell
-dsh plugin --profile web add dsh-plugin-swift-cycle@0.1.1
+dsh plugin --profile web add dsh-plugin-swift-cycle@0.1.2
 ```
 
-npm 固定版本不可变。需要直接从 GitHub 安装同一版本时，使用 `v0.1.1` 对应的完整 40 位 commit：
+npm 固定版本不可变。需要直接从 GitHub 安装同一版本时，使用 `v0.1.2` 对应的完整 40 位 commit：
 
 ```powershell
-dsh plugin --profile web add "github:Solismuchengxue/dsh_plugin_swift_cycle#d44bee70c109bb1d772d26ee790d6de9aadce9cc"
+dsh plugin --profile web add "github:Solismuchengxue/dsh_plugin_swift_cycle#8697450e53d9829c8b1e07d8fa5d7e059b0a7f89"
 ```
 
-npm `0.1.1` 和 GitHub 固定提交均已在临时隔离 `DSH_HOME` 中验证。各版本的安装身份和验证边界以对应 [GitHub Release](https://github.com/Solismuchengxue/dsh_plugin_swift_cycle/releases/tag/v0.1.1) 为准；不要把未固定的默认分支用于可重放安装。
+npm `0.1.1` 和其 GitHub 固定提交已在临时隔离 `DSH_HOME` 中验证。`0.1.2` 已完成公共分发身份校验，但尚未进行隔离或真实 profile 安装。各版本的安装身份和验证边界以对应 [GitHub Release](https://github.com/Solismuchengxue/dsh_plugin_swift_cycle/releases/tag/v0.1.2) 为准；不要把未固定的默认分支用于可重放安装。
 
-源码候选 `0.1.2` 尚未发布到 npm 或 GitHub Release，也未安装到真实 profile。不要把本仓库工作树或 `main` 当作公开的不可变安装版本。
+`0.1.2` 的不可变安装身份是 npm 固定版本、GitHub tag 及上述完整发布 commit；不要把可继续前进的 `main` 当作不可变安装版本。
 
 安装或改动 profile 前先检查合成配置：
 
@@ -107,7 +107,7 @@ node scripts/verify-upstream.mjs --source "<path-to-swift-cycle-skill-directory>
 3. 隔离 Harness Runtime 能注册和显式调用；
 4. 真实用户 profile 已安装并由实际消费者使用。
 
-已发布版本的四层各有对应证据；真实 consumer 证据覆盖 GitHub `v0.1.0` 在空的非 Git 工作区与本仓库中的只读调用，以及 npm `0.1.1` 在本仓库中的一次只读调用。未发布的 `0.1.2` 目前只有源码和本地候选制品证据，隔离 Runtime、真实 profile 和 consumer 均为 `NOT_VERIFIED`。参见 [2026-08-15 DSH 隔离兼容性验证](docs/evidence/2026-08-15-dsh-compatibility.md)、[2026-08-16 真实 Web consumer 烟测](docs/evidence/2026-08-16-real-web-consumer-smoke.md)、[2026-08-16 非空 Git 项目治理烟测](docs/evidence/2026-08-16-real-git-project-governance-smoke.md)与 [2026-08-20 npm v0.1.1 真实 consumer 烟测](docs/evidence/2026-08-20-real-npm-v0.1.1-consumer-smoke.md)。
+真实 consumer 证据覆盖 GitHub `v0.1.0` 在空的非 Git 工作区与本仓库中的只读调用，以及 npm `0.1.1` 在本仓库中的一次只读调用。`0.1.2` 已完成源码、候选制品和公共分发身份验证，隔离 Runtime、真实 profile 和 consumer 均为 `NOT_VERIFIED`。参见 [2026-08-15 DSH 隔离兼容性验证](docs/evidence/2026-08-15-dsh-compatibility.md)、[2026-08-16 真实 Web consumer 烟测](docs/evidence/2026-08-16-real-web-consumer-smoke.md)、[2026-08-16 非空 Git 项目治理烟测](docs/evidence/2026-08-16-real-git-project-governance-smoke.md)、[2026-08-20 npm v0.1.1 真实 consumer 烟测](docs/evidence/2026-08-20-real-npm-v0.1.1-consumer-smoke.md)与 [2026-08-30 npm v0.1.2 发布证据](docs/evidence/2026-08-30-npm-release-v0.1.2.md)。
 
 ## 权威来源
 
