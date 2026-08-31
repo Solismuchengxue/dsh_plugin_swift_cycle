@@ -2,38 +2,62 @@
   "schemaVersion": 1,
   "adapter": {
     "name": "dsh-plugin-swift-cycle",
-    "version": "0.1.2"
+    "version": "0.1.3"
   },
   "upstream": {
     "repository": "https://github.com/Solismuchengxue/skill_swift_cycle",
     "tag": null,
-    "commit": "f383157fce7d179f29de867605d16e01b64366c8",
+    "commit": "18df0777921aa9bf30977a4a07b911b8feaebd28",
     "skillName": "swift-cycle"
   },
   "files": [
     {
       "path": "SKILL.md",
-      "sha256": "0674ba6d22bbe0867613bb28fae8759019d88b38b6debf326d38c315665968cb"
+      "sha256": "dbd6b2e3a3fc7090a4d19577f0dd65b6be1173d655f22d6988136b6380713373"
     },
     {
       "path": "agents/openai.yaml",
-      "sha256": "2c28493e10c85a7710a5e774844bb0515f606c4506e5e8d5d12fa1be21107898"
+      "sha256": "eb0a93318d2781e5b2953a2e8277f520cca9e94be3da066200c0be74d8baabe4"
+    },
+    {
+      "path": "references/adoption-and-routing.md",
+      "sha256": "c515c56b265cc48ddb58e82d0bf2fb3f1fd7fcf9b02f218b5b2b94a8ccb54258"
+    },
+    {
+      "path": "references/document-information-architecture.md",
+      "sha256": "d2e8707e663cb8d5ef9dc39efaf8ddb248a7d13723d1cd4448395aa2b02a75e1"
     },
     {
       "path": "references/document-profiles.md",
-      "sha256": "8de8d9fa08d1166cd260e4683f06d3d2dc875b48d3152cdbd9c1789ae535c6af"
+      "sha256": "bf65d0247f717c279a0bb7fe88ab3023b8aa2eacd555ca7b027a50492d7a13f1"
+    },
+    {
+      "path": "references/governance-boundaries.md",
+      "sha256": "6d3b42850235ddc7d9f0d93fc4a43f05d72aa112627bfec8102b45954fa60a89"
+    },
+    {
+      "path": "references/lifecycle-and-closeout.md",
+      "sha256": "b52d3adaba02ea70dba58f5c8dc70e9d555e0ea9cc8403c5d008dcc308b6c1ed"
     },
     {
       "path": "references/zh-CN.md",
-      "sha256": "8e5b2d0f57f577703a294fd96fc1bb13ac7a8f2780fbb290e6cbbc712769b53c"
+      "sha256": "1bf265e08b616b439cd024b593f6aadc7ee18c2d4f0fe6bceb44b8120962662b"
     },
     {
       "path": "templates/DESIGN.md",
-      "sha256": "02c34da0c1dd7465379c69819f9577c0edc21b5802c0da0312b4ec6ec029edc9"
+      "sha256": "60d7905f71dc4d05fe4e3fade23dc858d7356343a64048bc93fe9674571c2371"
+    },
+    {
+      "path": "templates/DEVLOG.md",
+      "sha256": "553354a0898ae36550b0b20b6489eb16825966c012039d3ceaffc525aecd011f"
     },
     {
       "path": "templates/TODO.md",
-      "sha256": "4b84b2785f3330297a45447630a91bbb6a4ac945ef7899ae7e43a9c56ced22b9"
+      "sha256": "c543099ce0e9a95b31496d6f189cf180b5fad3977a9c7dc82113992a39cb5f81"
+    },
+    {
+      "path": "templates/docs/README.md",
+      "sha256": "7c7edeef5cae9ba14420454013275d8efa949f2dfc314af217fe517f6c1643f5"
     },
     {
       "path": "templates/docs/adr/ADR-NNN.md",
@@ -45,7 +69,7 @@
     },
     {
       "path": "templates/docs/architecture.md",
-      "sha256": "61aeff94efd245ba72fc8cd4e0f625627678ee018ce7ba21f578bd41f89fcd83"
+      "sha256": "ace719ef636d8d2a5f34ffbe51c1e4dc6aff91da61433bd1a495d089d86e5b7b"
     },
     {
       "path": "templates/docs/closeout-packet.md",
@@ -53,17 +77,17 @@
     },
     {
       "path": "templates/docs/evaluation.md",
-      "sha256": "f7a07b77c95f19a56b63a06602b54861a49cf131301761fef1d586fc11e3c48f"
+      "sha256": "568db36f2dce8b7c3afaaea76b4680233f6c3da165485f8eb0e45f07e72698a4"
     },
     {
       "path": "templates/docs/operations.md",
-      "sha256": "b36a7a1271d1a1e3c3051b56cf8eec2885baf819a0d6ef4b3b1ac19d49b7bd6e"
+      "sha256": "85891c3dc7b6c3787575180e871ffffd60adc2fdb2da469dea1dae826f898fc1"
     },
     {
       "path": "templates/docs/review-packet.md",
       "sha256": "34ac545ff4919f2e98d187241bc29cccc879b241f17a061eab8f22407a0ce591"
     }
   ],
-  "payloadSha256": "fff7094f40c291cc9e03aa96ad271ef110229aba2fb7afa322473949043e4c19",
-  "registrationMetadataSha256": "7d83700b11c800c28d6900a0432e1b694cd207288d2e57ee971f1684ba8c8830"
+  "payloadSha256": "4e3e94815947c77094717aacbe17c11f7c9c15906b3f9499433c21c254301664",
+  "registrationMetadataSha256": "0f62d33161fd4d4ae9a4f940b2f68cb39a06cbcb2dd87db090f76fea8a165439"
 }

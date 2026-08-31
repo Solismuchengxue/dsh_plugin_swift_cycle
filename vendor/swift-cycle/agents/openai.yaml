@@ -1,7 +1,7 @@
 interface:
   display_name: "Swift Cycle / 快速螺旋"
-  short_description: "Maintain small projects through lightweight, verified cycles"
-  default_prompt: "Use $swift-cycle to establish or review a lightweight maintenance framework for this project."
+  short_description: "一次采用，持续维护单项目的轻量工程循环"
+  default_prompt: "使用 $swift-cycle 为当前项目建立或接管轻量维护框架；采用后写入项目 AGENTS.md 持久绑定，并自动维护后续任务。"
 
 policy:
   allow_implicit_invocation: false

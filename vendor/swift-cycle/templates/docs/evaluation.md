@@ -1,5 +1,7 @@
 # 候选方案评估
 
+> 仅在候选比较或受控试用需要跨会话共享时使用；一次性本地判断继续留在 DEVLOG。
+
 ## 状态
 
 - 状态：candidate | trial | accepted | rejected | deferred

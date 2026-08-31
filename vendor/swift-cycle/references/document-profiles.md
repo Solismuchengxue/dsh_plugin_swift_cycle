@@ -1,118 +1,94 @@
-# Document Profiles
+# 文档档位与职责一致性
 
-Use this reference after selecting a Swift Cycle scenario. Profiles are starting configurations, not mandatory directory trees. Reuse equivalent repository documents and omit every file whose responsibility does not exist.
+首次采用、文档重组、重大结构变化或里程碑关闭需要判断文档职责时读取本文件。
 
-Templates define structure, not a mandatory prose language. Resolve the target file language using the canonical Skill, then adapt headings, explanations, and examples consistently. Preserve filenames, commands, APIs, code identifiers, and standard status values.
+档位是 Agent 的后台起点，不是固定目录树、状态 Schema 或用户选择菜单。始终先复用项目现有权威，再决定是否新增文件。
 
-## Selection
+## 自动选择
 
-| Profile | Use when | Do not use when |
+| 档位 | 启用条件 | 不启用条件 |
 | --- | --- | --- |
-| `minimal` | A small project or bounded change needs clear user, design, agent, action, and maintenance responsibilities | The task has no durable documentation change beyond an existing file |
-| `standard` | Architecture, roadmap, candidate evaluation, or durable decisions need separate authorities | Extra files would only repeat README or DESIGN |
-| `runtime_integration` | The project has deployable runtime, operations, storage, security, contracts, or active consumers | Only source code exists or runtime claims are outside the task |
+| `minimal` | 核心用户、设计、协作、行动和维护职责需要明确 | 当前任务没有长期文档影响，现有单一权威已经足够 |
+| `standard` | 长期架构、路线图、候选评估或重要决策需要独立共享权威 | 新文件只会重复 README 或 DESIGN |
+| `runtime_integration` | 当前任务需要建立、改变或验证多个运维、合同、安全、存储、制品、运行态或消费者层 | 只更新一个已有合同或用户行为，且没有跨层结论 |
 
-State the chosen profile and reason in the work package. A project may start minimal and add one standard or runtime document without adopting the rest.
+允许 `minimal` 复用一个已有专业文档，也允许从 `minimal` 只增加一个必要文档；这不等于采用整个更高档位。
 
-## Minimal profile
+## profile_conformance
 
-| Asset | Responsibility |
+每次 adoption、重大结构变化和里程碑关闭都在内部工作包中维护职责一致性记录。它不是新文件，也不规定固定字段名；必须覆盖以下语义：
+
+| 职责 | 处理 | 唯一权威 | 理由 | 更新触发 |
+| --- | --- | --- | --- | --- |
+| 用户入口 | 复用现有 / 新建 / 不适用 | 路径或外部权威 | 为什么足够或为何缺失 | 哪类用户事实变化时更新 |
+| 设计入口 | 复用现有 / 新建 / 不适用 | 路径或外部权威 | 为什么足够或为何缺失 | 哪类边界变化时更新 |
+| 项目指令 | 复用现有 / 新建 / 不适用 | 路径 | 如何承载持久绑定 | 哪类治理规则变化时更新 |
+| 本地行动 | 复用现有 / 新建 / 不适用 | 本地路径 | 当前切片如何维护 | 行动、阻塞或下一步变化 |
+| 本地维护日志 | 复用现有 / 新建 / 不适用 | 本地路径 | 失败和判断如何留存 | 失败、拒绝方案或经验变化 |
+| 长期共享事实 | 复用现有 / 新建 / 不适用 | 路径或外部权威 | 哪些事实需要独立文档 | 对应事实或决策变化 |
+| 运行与集成 | 复用现有 / 新建 / 不适用 | 路径或外部权威 | 哪些交付层真实存在 | 合同、身份或运行边界变化 |
+| 文档入口 | 复用现有 / 新建 / 不适用 | DESIGN 或 `docs/README.md` | 哪个入口能提供完整且不重复的导航 | 文档数量、受众或结构变化 |
+| 子目录索引 | 复用现有 / 新建 / 不适用 | 对应目录 `README.md` | 同类文档是否需要独立状态导航 | 同类责任或维护成本变化 |
+| 用途与受众分类 | 复用现有 / 新建 / 不适用 | 入口索引字段 | 如何帮助读者发现内容而不复制文件树 | 受众或文档用途变化 |
+
+没有路径时可记录等价的 Issue、Wiki 或外部权威。选择“不适用”必须说明项目或任务为何没有该职责，不能只写占位词。
+
+## minimal
+
+| 资产 | 职责 |
 | --- | --- |
-| `README.md` | User-facing purpose, setup, use, and limitations |
-| `DESIGN.md` or equivalent | Concise design entry, adopted shape, boundaries, and links |
-| `AGENTS.md` | Repository collaboration, safety, synchronization, and verification rules |
-| Local `TODO.md` | Current milestone or action slice, blockers, and next action |
-| Local `DEVLOG.md` | Failures, rejected approaches, maintenance evidence, and reusable-gate candidates |
-| Existing `docs/` | Only durable details that already need a separate authority |
+| `README.md` 或等价入口 | 面向用户的价值、安装或启动、用法和限制 |
+| `DESIGN.md` 或等价入口 | 简洁设计、正式边界和详细权威索引 |
+| `AGENTS.md` | 项目规则、持久绑定、同步与验证要求 |
+| 本地 `TODO.md` | 当前行动、阻塞和下一步 |
+| 本地 `DEVLOG.md` | 失败、拒绝方案、内部判断和维护证据 |
+| 已有 `docs/` | 已经需要独立权威的长期事实 |
 
-Do not create empty placeholders. Keep TODO and DEVLOG ignored when that is the project's established policy.
+不要创建空占位。TODO 和 DEVLOG 沿用项目已确认的忽略策略。
 
-## Standard profile
+## standard
 
-Add only the assets justified by long-lived facts:
+只在对应长期事实存在时增加：
 
-| Asset | Enable when | Authority |
+| 资产 | 启用条件 | 权威职责 |
 | --- | --- | --- |
-| `docs/architecture.md` | System shape, state, sequence, or data flow needs more detail than DESIGN | Detailed adopted architecture and diagrams |
-| `docs/roadmap.md` | Cross-session or cross-machine commitments exist | Durable milestones, dependencies, and exit conditions |
-| `docs/evaluation/*.md` | A candidate comparison or controlled trial needs shared context | Facts, observations, candidates, limitations, assumptions, unknowns, and decision criteria |
-| `docs/adr/` | A long-lived significant decision has been made | Decision, alternatives, consequences, and evidence |
-| Dated or milestone Review Packet | A separate reviewer needs a bounded snapshot | Frozen review scope and evidence, never current project truth |
+| `docs/architecture.md` | 系统结构、状态、时序或数据流超出 DESIGN 的简洁入口 | 详细正式架构和必要 Mermaid |
+| `docs/roadmap.md` | 存在跨会话或跨机器承诺 | 里程碑、依赖和退出条件 |
+| `docs/evaluation/*.md` | 候选比较或受控试用需要共享 | 事实分类、条件、证据和有界结论 |
+| `docs/adr/` | 长期重大决策已经形成 | 决策、备选、后果和证据 |
+| Review Packet | 独立审查需要冻结快照 | 过程产物；默认不进入长期 docs，只有持续审计价值明确时放入 review/evidence 位置 |
 
-## Runtime integration profile
+## runtime_integration
 
-Extend the standard profile only with relevant layers:
+只加入项目实际存在的层：
 
-| Asset | Responsibility |
+| 资产或职责 | 覆盖内容 |
 | --- | --- |
-| `docs/operations.md` | Install, start, stop, verify, rollback, and troubleshoot |
-| Contract documentation | Canonical fields, compatibility, errors, ownership, and change triggers |
-| Security boundary | Exposure, trust, credentials, data handling, and residual risk |
-| Storage and artifact boundary | Source, cache, artifact, runtime data, retention, and cleanup |
-| Integration boundary | Producer/consumer responsibilities, inputs, outputs, versioning, and failure behavior |
-| Identity matrix or evidence | Source revision, artifact identity, runtime identity, and active-consumer evidence |
+| `docs/operations.md` | 安装、启动、停止、验证、回滚和排障 |
+| 合同文档 | canonical 字段、兼容性、错误、所有权和变更触发 |
+| 安全边界 | 暴露面、信任、凭据、数据处理和剩余风险 |
+| 存储与制品边界 | 源码、缓存、制品、运行数据、保留和清理 |
+| 集成边界 | 生产者与消费者职责、输入输出、版本和失败行为 |
+| 身份与证据 | 源码、制品、运行态和活动消费者的独立证据 |
 
-Keep layer claims independent. Source evidence does not prove an artifact, runtime, or consumer.
+一个层通过不能关闭另一个层；未检查层保持未验证。
 
-## Shared document shape
+## 模板裁剪
 
-Use one level-one heading per file. Prefer these stable level-two sections when they fit:
+- 模板只提供结构，按项目语言改写并删除不适用章节。
+- TODO 默认普通清单；只有多阶段或多提交工作才启用里程碑区块。
+- TODO 只保留当前工作面和最近完成项；达到模板阈值时，把较早证据迁移到本地 DEVLOG，把长期承诺或事实晋升到 roadmap、共享 Issue 或对应共享权威。
+- DEVLOG 使用按日期、按证据的条目，不记录逐命令流水账、聊天转录、秘密值，也不成为计划、授权或共享事实的第二权威。
+- architecture 每次只选择能表达当前关系的一类 Mermaid，不复制全部示例。
+- operations 只保留真实存在的交付层。
+- evaluation 只在候选判断需要长期共享时创建。
+- 不因模板存在就创建目录或文档。
+- 文档入口、用途分类、子目录和移动边界见 [document-information-architecture.md](document-information-architecture.md)。
 
-1. Status
-2. Current conclusion
-3. Scope or responsibility
-4. Goals and non-goals
-5. Architecture, contract, procedure, or decision detail
-6. Boundaries and evidence
-7. Unresolved items
-8. Update triggers
-9. Revision record
+## 可移植模板来源与本地记录边界
 
-Do not force every section into every document. README remains user-facing and normally omits internal status metadata.
+`templates/TODO.md`、`templates/DEVLOG.md` 和 `templates/DESIGN.md` 提炼自用户批准的 Solis_TTS_Runtime 文档实践，但已经去除项目事实并改写为 Swift Cycle 的可移植 canonical 模板。Skill 的执行不依赖该参考项目、NAS 或 UNC 路径；其他项目只采用经裁剪的结构，不复制参考项目的内容、身份、环境或运行结论。
 
-Use level-three headings for details. Avoid level-four and deeper headings unless an external format requires them. Keep Chinese paragraphs short, tables compact, and examples executable.
+TODO 和 DEVLOG 的默认策略是在目标项目允许时作为本地 Git-ignore 记录。应用前必须先检查目标项目规则、跟踪状态和既有权威：若文件已被跟踪，不得自动删除、取消跟踪或仅为套用默认策略把该路径加入忽略规则；若项目要求共享或采用其他位置，则沿用项目规则或请求决定。
 
-## Mermaid
-
-- Put the conclusion before the diagram.
-- Give one diagram one primary relationship.
-- Use native Mermaid source; do not replace it with a generated image when text remains adequate.
-- Explain scope and non-claims after the diagram.
-- Prefer a flowchart for relationships, a sequence diagram for interactions, a state diagram for lifecycle, and a simple graph for topology.
-
-## Freshness review
-
-Run a focused freshness pass when a milestone, accepted decision, contract, runtime identity, or consumer identity changes:
-
-- compare status and current conclusion with fresh repository or runtime evidence;
-- find resolved unknowns, obsolete pending work, stale counts, and superseded candidates;
-- confirm DESIGN still indexes current detailed authorities;
-- confirm roadmap and TODO do not disagree about the active slice;
-- verify early review packets are frozen, dated or milestone-bound, and no longer linked as current truth;
-- check headings, local links, Mermaid fences, and revision records;
-- update, mark stale, supersede, archive, or retire; never silently preserve a contradiction.
-
-## Packet lifecycle
-
-### Review Packet
-
-Use a dated or milestone-qualified filename, for example:
-
-`docs/reviews/2026-08-30-milestone-name.md`
-
-Include scope, exact identity, claims, decisive evidence, unknowns, and requested review. Freeze it after handoff. Later corrections belong in a new packet or in the authoritative design/evidence document.
-
-### Closeout Packet
-
-Summarize delivered scope, verification, remaining risks, shared authorities, local-only records, and the next separately authorized action. It is a handoff artifact, not an acceptance or release decision.
-
-## Retirement
-
-Before archiving or deleting a document:
-
-1. Identify its current authority and inbound links.
-2. Name the replacement or explain why no replacement is needed.
-3. Preserve historically material decisions or evidence.
-4. Update indexes and links.
-5. Verify no known consumer still depends on it.
-6. Keep deletion or irreversible cleanup behind its own authorization.
+里程碑关闭时重新核对本表；若没有文档影响，在内部记录理由，不制造无意义改动。

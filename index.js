@@ -7,10 +7,16 @@ const packageRoot = path.dirname(fileURLToPath(import.meta.url))
 const expectedFiles = [
   'SKILL.md',
   'agents/openai.yaml',
+  'references/adoption-and-routing.md',
+  'references/document-information-architecture.md',
   'references/document-profiles.md',
+  'references/governance-boundaries.md',
+  'references/lifecycle-and-closeout.md',
   'references/zh-CN.md',
   'templates/DESIGN.md',
+  'templates/DEVLOG.md',
   'templates/TODO.md',
+  'templates/docs/README.md',
   'templates/docs/adr/ADR-NNN.md',
   'templates/docs/adr/README.md',
   'templates/docs/architecture.md',
@@ -63,13 +69,13 @@ function validateLock(lock) {
   if (lock.schemaVersion !== 1) {
     throw new Error('unsupported upstream lock schema')
   }
-  if (lock.adapter?.name !== 'dsh-plugin-swift-cycle' || lock.adapter?.version !== '0.1.2') {
+  if (lock.adapter?.name !== 'dsh-plugin-swift-cycle' || lock.adapter?.version !== '0.1.3') {
     throw new Error('unexpected adapter identity in upstream lock')
   }
   if (
     lock.upstream?.repository !== 'https://github.com/Solismuchengxue/skill_swift_cycle'
     || lock.upstream?.tag !== null
-    || lock.upstream?.commit !== 'f383157fce7d179f29de867605d16e01b64366c8'
+    || lock.upstream?.commit !== '18df0777921aa9bf30977a4a07b911b8feaebd28'
     || lock.upstream?.skillName !== 'swift-cycle'
   ) {
     throw new Error('unexpected Swift Cycle identity in upstream lock')

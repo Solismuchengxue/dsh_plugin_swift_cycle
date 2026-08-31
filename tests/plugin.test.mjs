@@ -64,7 +64,7 @@ test('packaged Skill exposes the exact user-only registration contract', async (
   const skill = await loadPackagedSkill()
 
   assert.equal(skill.name, 'swift-cycle')
-  assert.match(skill.description, /^Manual-invocation workflow/)
+  assert.match(skill.description, /^仅当用户显式调用 swift-cycle/)
   assert.equal(skill.source, 'bundled')
   assert.equal(skill.provider, 'dsh-plugin-swift-cycle')
   assert.deepEqual(skill.invocation, {
@@ -77,25 +77,25 @@ test('packaged Skill exposes the exact user-only registration contract', async (
   })
   assert.ok(!skill.content.startsWith('---'))
   for (const marker of [
-    '## Match governance to task size',
-    '## Apply the selected document profile',
-    '## Keep documents readable and fresh',
-    '## Establish a governance baseline when needed',
-    '## Promote local knowledge',
-    '## Separate composite states',
-    '### Commit boundaries',
-    '## Separate source and runtime claims',
-    '## Freeze and retire packets',
+    '## 调用与采用',
+    '## 读取真实现场',
+    '## 后台自动路由',
+    '## 自动选择文档档位',
+    '## 文档职责',
+    '## 自动同步与收敛',
+    '## 有限工作包',
+    '## 何时请求决定',
+    '## 验证与独立审查',
   ]) {
     assert.ok(skill.content.includes(marker), `missing capability marker: ${marker}`)
   }
   assert.deepEqual(skill.metadata, {
     upstreamRepository: 'https://github.com/Solismuchengxue/skill_swift_cycle',
     upstreamTag: null,
-    upstreamCommit: 'f383157fce7d179f29de867605d16e01b64366c8',
-    adapterVersion: '0.1.2',
-    payloadSha256: 'fff7094f40c291cc9e03aa96ad271ef110229aba2fb7afa322473949043e4c19',
-    registrationMetadataSha256: '7d83700b11c800c28d6900a0432e1b694cd207288d2e57ee971f1684ba8c8830',
+    upstreamCommit: '18df0777921aa9bf30977a4a07b911b8feaebd28',
+    adapterVersion: '0.1.3',
+    payloadSha256: '4e3e94815947c77094717aacbe17c11f7c9c15906b3f9499433c21c254301664',
+    registrationMetadataSha256: '0f62d33161fd4d4ae9a4f940b2f68cb39a06cbcb2dd87db090f76fea8a165439',
   })
 })
 

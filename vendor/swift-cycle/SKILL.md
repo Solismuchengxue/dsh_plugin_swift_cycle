@@ -1,367 +1,128 @@
 ---
 name: swift-cycle
-description: Manual-invocation workflow for lightweight governance of personal and small software projects. Use only when the user explicitly invokes swift-cycle to initialize or review README, DESIGN, AGENTS, local TODO and DEVLOG, shared docs, governance baselines, commit boundaries, source/runtime transitions, candidate evaluations, lifecycle states, documentation drift, or project closeout. Keep small local changes fast and avoid heavyweight process.
+description: 仅当用户显式调用 swift-cycle，或当前项目的 AGENTS.md 已持久绑定该 Skill 时使用；适用于单项目内的轻量维护、文档治理、里程碑推进与收敛。
 license: MIT
 ---
 
-# Swift Cycle
+# Swift Cycle（快速螺旋）
 
-## Goal
+## 目标与边界
 
-Maintain design consistency, execution continuity, and traceability with the smallest useful documentation set. Adjust the framework incrementally from repository evidence. Never describe a candidate, test, tool, or decision as verified when evidence is missing.
+用最小必要文档连接项目意图、实施、证据和学习。先读取真实现场，再做最小可验证变更；证据不足时保持候选、未知或未验证。
 
-Swift Cycle owns the engineering loop inside one project: choose a scenario, select a proportional document profile, shape a finite work package, implement, verify, and promote reusable learning. It may emit a project work package, Review Packet, or Closeout Packet for an external coordinator, but it does not own portfolio routing, capacity, cross-project authorization, model selection, approval queues, registries, or an organizational lifecycle. Do not create a second status machine inside the project.
+Swift Cycle 只负责一个项目内部的工程循环。它不负责上层协同、容量、独立验收、Registry、跨部门治理、模型选择或跨项目授权，也不接入 `stop-that-shit`。
 
-## Use the project's language
+## 调用与采用
 
-Resolve conversation language and file language separately.
+- 系统层保持显式调用；不得把语义相似当成采用。
+- 用户首次要求初始化或接管时，执行一次显式 `$swift-cycle` adoption。
+- adoption 获得批准后，在项目 `AGENTS.md` 写入持久绑定：后续项目任务必须加载 `$swift-cycle`，由 Agent 自动维护，不要求用户重复调用或选择模式。
+- 一次性显式审查不自动产生持久绑定；只有用户要求采用或初始化时才写入。
+- 已绑定项目直接继续当前任务。不要向用户展示 bootstrap、milestone 或 closeout 菜单。
 
-1. For conversation, explanations, and the final report, use this precedence: the user's explicit language request, then the language of the current Skill invocation.
-2. When modifying an existing file, use: the user's explicit file-language request, the file's established primary language, the project's primary language, then the invocation language.
-3. When creating a file, use: the user's explicit file-language request, the project's primary language, then the invocation language.
-4. A mid-conversation language switch changes communication, not the language of existing documents. Do not bulk-translate files unless the user requests it.
-5. Create bilingual README or document counterparts only when the project already maintains them or the user explicitly requests them.
-6. Do not translate filenames, commands, APIs, code identifiers, or standard status values. Avoid accidental mixed-language prose inside one file.
-7. Preserve terminology and filename conventions already established in the repository. Keep standard filenames such as `README.md`, `DESIGN.md`, `AGENTS.md`, `TODO.md`, and `DEVLOG.md` unless the project already uses an equivalent.
-8. Treat templates as structural examples. Adapt their headings and prose to the resolved file language instead of copying an example language mechanically.
-9. For Simplified Chinese terminology and document wording, read `references/zh-CN.md`.
+采用、绑定文本和内部阶段判断见 [adoption-and-routing.md](references/adoption-and-routing.md)。
 
-## Inspect the real state first
+## 使用项目语言
 
-1. Read repository instructions, `README.md`, `DESIGN.md`, relevant `docs/`, `.gitignore`, and existing maintenance records.
-2. Inspect the Git branch, status, and relevant diff. Separate pre-existing user changes from the current task.
-3. Distinguish confirmed facts, assumptions, and inferences. Do not invent repository structure, tests, tools, decisions, or validation results.
-4. Preserve existing user work. Do not remove data, discard changes, or perform unrelated cleanup.
+对话按用户要求，其次按本次调用语言。修改文件时优先沿用文件主语言；新建文件时优先项目主语言。不要因对话切换而批量翻译，也不要翻译文件名、命令、API、代码标识或标准状态值。中文术语见 [zh-CN.md](references/zh-CN.md)。
 
-## Establish a governance baseline when needed
+## 读取真实现场
 
-Establish a baseline before non-trivial governance work that spans authority
-boundaries, changes a source/runtime relationship, migrates or reorganizes
-state, replaces or removes assets, or requires a reliable before/after
-comparison. Do not create one for a simple, local, explicit change.
+1. 读取适用的 `AGENTS.md`、`README.md`、`DESIGN.md`、相关 `docs/`、忽略规则和可访问的本地维护记录。
+2. 检查 Git 分支、状态和相关 diff，分开既有用户改动与当前任务。
+3. 区分已确认事实、观察、推断、候选、限制和未知项。
+4. 只检查与当前声明相关的源码、制品、运行态或消费者层，不假设不存在或已经验证的层。
 
-1. Capture only the comparison facts the task needs: scope, current authority,
-   relevant identities, preserved items, known unknowns, and the evidence source
-   and time.
-2. Keep the observed current state separate from the intended target state. Do
-   not rewrite the baseline to match the outcome.
-3. Use an existing task record, report, or evidence location; do not require a
-   new file or fixed schema. Keep short-lived baselines in the current execution
-   context, and promote them only when later sessions, irreversible work, or
-   acceptance depends on them.
-4. Refresh the baseline or mark it stale when its scope, identity, or authority
-   changes.
+## 后台自动路由
 
-## Reuse before building
+根据现场自动判断当前阶段，不要求用户选择：
 
-Before implementation:
+| 阶段 | 识别信号 | 默认动作 |
+| --- | --- | --- |
+| 首次采用或接管 | 尚无持久绑定，或文档职责未建立 | 保留现场，建立绑定和最小职责映射 |
+| 普通推进 | 目标与架构边界未实质改变 | 只更新受影响代码、测试和权威文档 |
+| 重大结构变化 | 权威、模块职责、合同模型、数据或交付边界发生实质变化 | 建立必要基线并更新设计或详细权威 |
+| 里程碑关闭 | 交付与验证已结束 | 自动收敛文档、状态、证据与本地行动记录 |
 
-1. Check the current repository for reusable code, scripts, dependencies, tools, documentation, and implementation patterns.
-2. Then evaluate official solutions and already installed Skills, plugins, MCP integrations, or development tools.
-3. If those are insufficient, evaluate maintained third-party tools and mature open-source projects.
-4. Summarize fit, limits, integration cost, major risks, and availability.
-5. Obtain user confirmation before installing, enabling, downloading, connecting, or configuring a new external solution.
+详细触发、停止条件和授权边界见 [adoption-and-routing.md](references/adoption-and-routing.md)。
 
-Do not perform unbounded research for a simple, local change with an obvious implementation.
+## 自动选择文档档位
 
-When a tool affects development or review, state its scope before adoption:
+选择能覆盖真实职责的最小档位：
 
-- **Project-local configuration:** smallest blast radius; prefer it when the tool is project-specific.
-- **Shared infrastructure:** record affected projects, compatibility, rollback, and ownership.
-- **User or system configuration:** treat as external deployment state and require explicit authorization.
-- **Generated files:** decide whether they are source, cache, evidence, or runtime data; define ignore, refresh, and retirement behavior before relying on them.
+- `minimal`：复用 README、简洁设计入口、AGENTS、本地 TODO/DEVLOG 和已有必要文档。
+- `standard`：仅在长期架构、路线图、评估或重要决策需要独立权威时增加对应文档。
+- `runtime_integration`：仅在当前任务需要建立、改变或验证多个运维、合同、安全、存储、集成或身份层时增加文档与证据。
 
-## Match governance to task size
+档位是后台配置，不是用户模式，也不是固定目录树。读取 [document-profiles.md](references/document-profiles.md) 完成内部 `profile_conformance`：每项职责记录“复用现有 / 新建 / 不适用”、唯一权威、理由和更新触发。缺少该映射时，不得宣称档位已落地。
 
-Choose the scenario before choosing documents. Read `references/document-profiles.md` when bootstrap, adoption, runtime integration, documentation restructuring, or closeout needs more than the minimal profile.
+## 文档职责
 
-| Scenario | Default profile | Minimum document action | Verification and stop condition |
-| --- | --- | --- | --- |
-| Bootstrap or adopt | `minimal`, upgrade to `standard` only when boundaries need durable detail | Reconcile README, DESIGN, AGENTS, local TODO/DEVLOG, and existing docs; preserve an adopted repository's current work | Verify identity, ownership, links, and ignore rules; stop before overwrite, deletion, installation, or external activation |
-| Small local change | `minimal` | Update only the responsible source or user document; keep TODO as a short execution view | Run the nearest check; stop when evidence is sufficient or scope expands |
-| Feature or behavior change | `minimal` or `standard` | Record changed behavior, design boundary, durable plan, and user-visible effect only where each belongs | Test the changed behavior and affected contracts; stop before unrelated refactoring |
-| Bug fix | `minimal` | Capture the reproduction and current action locally; promote the durable assertion after confirmation | Reproduce, fix the cause, and run regression checks; stop if the cause is still unknown |
-| Research or candidate evaluation | `standard` only when the evaluation must be shared | Separate facts, observations, candidates, limits, assumptions, and unknowns; use the candidate lifecycle | Stop at accepted, rejected, deferred, or insufficient evidence; a trial is not adoption |
-| Runtime project or cross-project integration | `runtime_integration` | Record contracts, identity layers, operations, security, storage, and consumer boundaries that actually exist | Verify each claimed layer independently; stop before deployment or consumer switching without authorization |
-| Milestone closeout | Existing profile | Reconcile shared truth, current TODO, evidence, decisions, and stale packets; prepare a concise Closeout Packet | Stop when claims match fresh evidence and remaining work is explicit |
-| Documentation retirement | Existing profile | Identify authority, inbound links, replacement, history value, and rollback before archive or deletion | Stop if the replacement is not authoritative or consumers remain unknown |
+- `README.md`：面向用户的介绍、安装或启动、用法和用户可见限制。
+- `DESIGN.md`：简洁设计总入口、正式边界、候选区分和详细文档索引。
+- `AGENTS.md`：项目规则、Swift Cycle 持久绑定、安全边界、同步触发与验证要求。
+- 本地 `TODO.md`：当前行动、阻塞和下一步；保持短小并由 Git 忽略。
+- 本地 `DEVLOG.md`：失败、拒绝方案、内部判断、维护证据和演进；由 Git 忽略。
+- `docs/`：长期共享的需求、架构、路线图、评估、运行手册、证据和 ADR。
 
-Profiles are starting configurations, not mandatory trees. Never burden a simple change with `standard` or `runtime_integration` artifacts merely because templates exist.
+一个事实只保留一个共享权威；其他位置使用链接或短摘要。模板只是条件式结构，必须按现场删减，禁止机械创建完整文档集。
 
-## Establish the core framework
+需要创建或重整 TODO、DEVLOG 或 DESIGN 时，读取 [document-profiles.md](references/document-profiles.md) 并按需裁剪对应模板，不复制参考项目事实或建立第二权威。
 
-At project start, establish these responsibilities. Reuse equivalent existing files instead of maintaining duplicates.
+当文档数量、受众差异或平铺结构已经影响可发现性，读取 [document-information-architecture.md](references/document-information-architecture.md)。小项目由 DESIGN 提供必要索引；只有完整 docs 导航确有价值时才增加 `docs/README.md`，并把移动与链接修复纳入一个有界 documentation-hygiene 工作包。
 
-### `README.md`
+## 自动同步与收敛
 
-- Keep a user-only perspective.
-- Include the project introduction, installation or startup, usage, and user-visible limitations.
-- Commit it to Git.
-- Exclude internal decisions, maintenance evidence, agent notes, and short-term tasks.
+在已批准任务或里程碑范围内，文档同步属于正常实施步骤，无需单独请示：
 
-### `DESIGN.md`
+- 用户行为变化时更新 README 或用户文档。
+- 架构、合同、数据、工具职责或交付边界变化时更新 DESIGN 和对应详细文档。
+- 行动、阻塞或下一步变化时更新本地 TODO。
+- 失败、拒绝方案或内部维护证据变化时更新本地 DEVLOG。
+- 长期承诺、决策、验证事实或迁移结果按职责晋升到共享文档，本地记录只保留状态或链接。
+- 每个里程碑关闭时检查 README、DESIGN、docs、TODO、DEVLOG 和活动 Packet；更新受影响内容，或记录“无文档影响”及理由。
 
-- Use it as the concise design entry point.
-- Record goals, principles, system shape, key boundaries, adopted architecture, and links to detailed documents.
-- Mark candidates clearly and keep them separate from adopted architecture.
-- Commit it to Git and avoid copying long details from `docs/`.
+详细治理、状态和证据边界见 [governance-boundaries.md](references/governance-boundaries.md)；候选、失败学习和关闭流程见 [lifecycle-and-closeout.md](references/lifecycle-and-closeout.md)。
 
-### `AGENTS.md`
+## 有限工作包
 
-- Record project rules, safety boundaries, documentation sync triggers, and verification requirements.
-- Keep different agents and sessions aligned.
-- Commit it to Git.
+对非简单任务，在后台形成有限工作包：
 
-### `DEVLOG.md`
+- 目标、可观察退出条件、精确范围和保留项；
+- 当前阶段、最小档位和 `profile_conformance`；
+- 依赖、风险、已知未知项、回滚点和最近验证；
+- 受影响文档及同步计划；
+- 仍需独立授权的动作。
 
-- Record failures, rejected approaches, internal judgments, maintenance evidence, and evolution history.
-- Keep it local at the repository root and ignore it in Git.
+不把内部路由细节变成用户菜单。普通任务直接推进，用户只看到结果或精确 blocker。
 
-### `TODO.md`
+## 短循环
 
-- Record current actions, priorities, blockers, and next steps.
-- Keep entries short, executable, and current.
-- Keep it local at the repository root and ignore it in Git.
-- Do not use it as the only store for cross-machine or long-term commitments.
-- Keep a normal checklist for simple work. Use milestone and PR structure only
-  when the task explicitly requires multiple PRs or the user requests
-  milestone-based execution.
+1. 扫描当前事实与风险。
+2. 完成推进目标的最小变更。
+3. 立即运行最接近风险的验证。
+4. 证据支持则继续；否则诊断、修正或回退当前步骤。
+5. 在里程碑关闭时自动完成文档收敛和新鲜度检查。
 
-### `docs/`
+不要因发现无关问题而扩展范围。多提交或混合 hunk 才规划提交边界；简单单提交只核对暂存范围。
 
-- Store long-lived shared requirements, architecture, runbooks, roadmaps, evaluations, and ADRs.
-- Commit it to Git and index detailed documents from `DESIGN.md`.
-- If no detailed document exists yet, create a meaningful status-bearing entry so the directory is not an empty placeholder.
+## 何时请求决定
 
-## Apply the selected document profile
+只在以下情况暂停并请求用户或外部协调方决定：
 
-- **`minimal`:** use the existing README, concise DESIGN or equivalent design entry, AGENTS, local TODO/DEVLOG, and only the shared docs the project already needs.
-- **`standard`:** add durable architecture, roadmap, evaluation, ADR, or other responsibility-specific documents only when the project has corresponding long-lived facts.
-- **`runtime_integration`:** extend `standard` with operations, contracts, security, storage/artifact, integration, and source/artifact/runtime/consumer evidence only for layers that exist.
+- 出现 materially new authority 或新的外部副作用；
+- 目标、架构或关键边界发生实质改变；
+- 无法安全判断事实的唯一权威位置；
+- 证据否定当前计划、回滚不再安全或任务越出已批准范围。
 
-Use templates as optional starting points, not required files. Prefer repository-equivalent documents over duplicates. Record why a profile was selected and which optional documents were intentionally omitted.
+普通文档同步、Mermaid、表格、TODO/DEVLOG 维护和档位选择不得打断用户。删除、安装、发布、部署、凭据、真实消费者切换等授权不会因 adoption 自动获得。
 
-## Keep documents readable and fresh
+## 验证与独立审查
 
-1. Give each Markdown document one level-one heading. Use level-two headings for stable sections and level-three headings for detail; avoid deeper trees unless an external format requires them.
-2. For internal design and operations documents, begin with status, current conclusion, scope or responsibility, and update trigger when those facts are useful. Keep internal status out of a user-only README.
-3. State the conclusion before a Mermaid diagram. Give each diagram one primary relationship, and explain its boundary after the diagram. Keep Mermaid source native and reviewable.
-4. Keep one concept authoritative in one location. Use links or concise summaries elsewhere instead of copying the same fact.
-5. End durable internal documents with unresolved items, update triggers, and a short revision record when their lifecycle benefits from them.
-6. Check freshness whenever a milestone, architecture, contract, runtime identity, consumer identity, or accepted decision changes. Search for stale status labels, obsolete pending work, resolved unknowns, heading drift, and contradictory counts or identities.
-7. Mark stale documents explicitly or update them. Do not leave a draft architecture, old plan, or early evaluation presenting itself as current truth after implementation has moved on.
+验证强度与声明风险相称：审查最终 diff，运行最近测试和 `git diff --check`，按受影响路径检查链接、忽略规则、文档新鲜度及真实交付层。
 
-## Promote local knowledge
+独立审查默认只判断目标、架构、边界、职责和文档是否与事实一致。除非哈希、manifest 或格式正是声明成立的必要证据，否则不要升级为全仓 SHA、多 manifest、反演摘要或格式微审计。未检查的层保持未验证。
 
-Treat ignored local maintenance records as capture surfaces, not durable shared authority.
+## 简洁报告
 
-1. Do not promote short-term actions, one-off failures, or current-session information.
-2. Promote a record when it becomes a cross-session or cross-machine commitment, a durable decision or constraint, or evidence that later work must review or verify.
-3. Choose the shared asset by responsibility: plans and commitments go to a roadmap, issue, milestone, or shared plan; architecture and trade-offs go to `DESIGN.md`, an ADR, or a decision document; verified facts go to evidence documentation; migration outcomes go to migration documentation; user-visible facts go to `README.md` or user documentation.
-4. After promotion, treat the shared asset as authoritative. Keep only a short status or link in the local record instead of copying the complete fact.
-
-## Separate composite states
-
-Treat a status as composite when one label answers more than one independent lifecycle question.
-
-1. Identify the independent concerns represented by the label, such as implementation, experiment, quality, or release concerns.
-2. Split only the concerns the project actually tracks. Give each concern its own meaning, transitions, and closure evidence.
-3. Keep concerns independent unless repository evidence defines a real dependency. Closing one concern must not silently close another.
-4. Treat any overall status as a derived summary, not the authority for its component concerns.
-5. Do not prescribe fixed fields, field names, or a status schema.
-
-## Separate source and runtime claims
-
-Apply this boundary only when the project has more than one relevant delivery
-layer.
-
-1. Identify only the layers that exist, such as source, a built or published
-   artifact, deployed runtime, and an active consumer.
-2. Treat each layer as an independent fact with its own authority and closure
-   evidence. Closing one layer must not silently close another.
-3. A source change does not authorize building, publishing, deploying, or
-   switching a consumer. Authorization does not transfer across layers.
-4. Source verification does not prove artifact or runtime behavior. Deployment
-   does not prove that an active consumer uses the new state.
-5. Use fresh evidence from the claimed layer and record the exact identity being
-   verified. Keep uninspected layers explicitly unverified.
-6. Do not prescribe mandatory layers, fixed state fields, or a status schema.
-
-For a transition, build only the identity matrix and precondition assertions the task needs. Typical identities include source revision, artifact digest or package version, runtime path or process identity, and active consumer evidence. Do not compare Git file mode such as `100644` directly with installed execution permissions such as `0755`; they describe different layers.
-
-Derive wrapper fields and schema mappings from the canonical contract, not from a sample payload or remembered shape. Avoid tests and manifests that both read the same derived value: a shared wrong source can make them agree while both are wrong. For copied digests, identities, or summaries, prefer structured generation or an independently recomputed value.
-
-## Initialize honest drafts
-
-Except for the user-facing `README.md`, an initial document may be marked `planned` or `draft`, but it must not be blank. Record:
-
-- purpose;
-- status;
-- current conclusion;
-- open questions;
-- update trigger.
-
-Keep internal draft state out of `README.md`. Put it in `DESIGN.md`, `TODO.md`, or relevant shared documentation.
-
-Treat `METHODOLOGY.md` as an explicit exception: create it only near project closeout from evidence of real work, and keep it local and ignored unless the user chooses otherwise.
-
-## Manage plans and candidates
-
-### Long-term plans
-
-- Store cross-machine, cross-session commitments in a committable feasibility
-  report, `docs/roadmap.md`, or the project's shared issue tracker.
-- A roadmap may begin as a status-marked draft, but do not describe planned work as completed.
-- Treat that shared artifact as the durable plan. Keep local `TODO.md` focused
-  on the current execution slice, actions, and blockers.
-
-### Commit boundaries
-
-Plan commit boundaries before staging when a task will create multiple commits,
-contains mixed-purpose hunks, depends on ordered commits, or requires an
-individually reviewable history.
-
-1. Assign each proposed commit one intent, its exact paths or hunks, its
-   dependencies, its verification, and its expected intermediate state.
-2. Keep pre-existing user changes and ignored local execution records outside
-   the planned boundary unless the user explicitly includes them.
-3. Make each intermediate commit coherent, reviewable, and safely reversible.
-   If no meaningful intermediate state exists, use one atomic commit instead of
-   forcing an artificial split.
-4. Review the staged diff for each boundary and verify the completed sequence as
-   a whole.
-
-For a simple single-commit change, verify only the staged scope; do not create a
-separate commit plan.
-
-### Milestones and PR queues
-
-When a task explicitly requires multiple PRs or the user requests milestone-based execution:
-
-1. Structure local `TODO.md` with a current milestone and a dependency-ordered PR queue.
-2. Give every PR item these fields: ID, milestone, deliverable, scope,
-   dependencies, verification, status, and PR link. Use an honest placeholder
-   such as `pending` until a PR exists; do not invent a link.
-3. Make every PR an independently reviewable, verifiable, and reversible
-   increment. Execute the queue in dependency order.
-4. When a milestone or PR status changes, update both local `TODO.md` and the
-   corresponding durable shared plan.
-
-For simple work, continue using the normal TODO checklist; do not introduce a PR queue.
-
-### Candidate lifecycle
-
-Follow this order:
-
-1. Mark the idea as a candidate in `DESIGN.md` and define its boundary.
-2. Schedule a controlled trial in local `TODO.md`.
-3. Create a status-marked evaluation document when the planned evaluation needs durable shared context.
-4. When the trial starts, mark it in progress and collect evidence.
-5. After validation, record acceptance or rejection in an ADR when the decision is long-lived and significant.
-6. Update the adopted design only after the decision is supported.
-
-An evaluation should cover:
-
-- purpose and status;
-- goals and non-goals;
-- evidence classes: confirmed facts, direct observations, candidate claims, limitations, assumptions, and unknowns;
-- risks;
-- acceptance and rejection criteria;
-- current evidence;
-- rollback path;
-- open questions and update trigger.
-
-Do not list a candidate tool as an adopted dependency before validation. Preserve important rejected or replaced decisions instead of deleting their rationale.
-
-## Synchronize on real triggers
-
-- Baseline scope, identity, or authority changes: refresh it or mark it stale.
-- Architecture, tool responsibility, or data boundary changes: update `DESIGN.md` and affected shared docs.
-- Source, artifact, runtime, or consumer transitions: update only the affected
-  layer and attach evidence from that layer.
-- Experiment, blocker, or next-action changes: update local `TODO.md`.
-- Milestone or PR status changes: update local `TODO.md` and the corresponding
-  durable shared plan.
-- Failure, rejected attempt, maintenance evidence, or important internal judgment: update local `DEVLOG.md`.
-- Long-lived and significant formal decision: complete an ADR after validation.
-- User-visible behavior, installation, or usage changes: update `README.md`.
-- Milestone, implementation, or accepted-decision changes: run a freshness check across DESIGN, architecture, roadmap, evaluation, operations, and active packets; close resolved unknowns and retire obsolete pending work.
-
-## Shape a finite work package
-
-Before changing a non-trivial project, state:
-
-- selected scenario and profile, with the reason;
-- goal and observable exit condition;
-- exact scope and preserved items;
-- authority and actions still requiring separate approval;
-- dependencies, risks, and known unknowns;
-- smallest relevant verification and rollback point;
-- expected document synchronization.
-
-Keep the work package project-local and finite. It is an execution contract, not an organizational queue or a new status schema.
-
-## Run the short loop
-
-Repeat:
-
-1. Scan the relevant state and risk.
-2. Make the smallest change that advances the current goal.
-3. Run the smallest relevant verification immediately.
-4. Continue when evidence supports the change; otherwise diagnose and correct or revert the current step.
-5. Do not expand scope merely because governance work exposed unrelated opportunities.
-
-Within one approved milestone, continue through normal steps without repeatedly interrupting the user when every step is already listed, remains under the same authority, is reversible, and stays inside the approved scope. Pause when authority changes, a new external side effect appears, evidence contradicts the plan, rollback is no longer safe, or the stop condition is reached.
-
-Keep Review evidence concise. Report boundaries and decisive evidence instead of repeating internal state after every ordinary step.
-
-## Promote failures into reusable learning
-
-Keep transient failure detail in local `DEVLOG.md`. When a failure establishes a reusable guard, record it as:
-
-1. **Failure mode:** the observable incorrect outcome.
-2. **Cause:** the confirmed mechanism, or `UNKNOWN` when not established.
-3. **Corrective assertion:** the condition that would have prevented or detected it.
-4. **Reusable gate:** where future work must check that assertion.
-
-Promote only the durable decision, contract correction, runbook step, test, or evidence rule to shared documentation. A single unconfirmed failure remains local.
-
-## Freeze and retire packets
-
-- Use a Review Packet only when another reviewer needs a bounded snapshot. Include scope, identity, claims, decisive evidence, unknowns, and requested review.
-- Date or milestone the packet and freeze it after handoff. Do not keep an early packet as a mutable current-truth document.
-- When later work supersedes a packet, mark it superseded or archive it, update inbound links, and point to the current authority. Preserve history when its evidence still matters.
-- Use a Closeout Packet to summarize delivered scope, verification, remaining risks, local-only records, shared authorities, and next separately authorized action.
-- Packets are outputs for an external coordination loop. They do not create project acceptance, activation, release, or organizational state.
-
-## Verify before completion
-
-Scale verification to the risk. Do not default to whole-repository hashes, multiple manifests, reverse-derived digests, or duplicate proofs when a narrower direct check establishes the claim. At minimum:
-
-1. Review the final diff and confirm every changed file belongs to the request.
-2. Run `git diff --check`.
-3. Check Markdown links when entry points or paths change.
-4. Run `git check-ignore` when local-file rules change.
-5. Confirm local maintenance files are neither tracked nor staged.
-6. When multiple commits are planned, inspect the staged scope and relevant
-   intermediate state at every boundary.
-7. For source or runtime claims, verify the claimed layer directly and report
-   every uninspected layer as unverified.
-8. Check document freshness and packet lifecycle when milestones, architecture, contracts, or current identities changed.
-9. For generated identities or copied summaries, use an independent recomputation when false agreement would be material.
-10. Report any check not run, why it was skipped, and what remains unverified.
-
-Claim completion only after verification.
-
-## Report concisely
-
-Report:
-
-- what changed;
-- selected scenario and profile, and why that layering was chosen;
-- checks actually run and their results;
-- shared files still uncommitted;
-- files kept local;
-- unresolved candidates, risks, or open questions.
-
-When an external coordinator requested a packet, emit only the bounded project facts it needs and preserve the distinction between reported engineering evidence and decisions owned outside Swift Cycle.
+只向用户报告：完成了什么、实际验证、发现的问题、需要决定的 blocker 或下一步。场景识别、档位选择、`profile_conformance` 和普通文档选择保留在后台；仅当其本身解释风险或 blocker 时展开。
