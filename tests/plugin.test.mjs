@@ -92,11 +92,11 @@ test('packaged Skill exposes the exact user-only registration contract', async (
   assert.match(skill.content, /docs\/blueprint\.md/)
   assert.deepEqual(skill.metadata, {
     upstreamRepository: 'https://github.com/Solismuchengxue/skill_swift_cycle',
-    upstreamTag: 'v1.3.0',
-    upstreamCommit: 'f6645dc2768132e48bb936147f40a954855e5ccf',
-    adapterVersion: '0.1.3',
-    payloadSha256: 'fccc61c3c9ce91f00e3fbd1238fdf945e7829f9ffa264a4ebc12ff34fc5c8fb0',
-    registrationMetadataSha256: 'c71d5517575435f515204bf4314b4a62a002fab32ac8da925e99f468bb613009',
+    upstreamTag: 'v1.3.1',
+    upstreamCommit: '21de521237470bdd55f9b4b0c61e0b6246c02cb8',
+    adapterVersion: '0.1.4',
+    payloadSha256: '7cb1bcf09afb23db310e3da01de88dda6521321dc45919b05a25f2ab9f381cf4',
+    registrationMetadataSha256: 'e7dbaf0d8aa4623820fae6ed8782b2655601e85d71f48d32cf90fd757aecfbd1',
   })
 })
 

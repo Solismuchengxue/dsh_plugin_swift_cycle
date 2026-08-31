@@ -70,13 +70,13 @@ function validateLock(lock) {
   if (lock.schemaVersion !== 1) {
     throw new Error('unsupported upstream lock schema')
   }
-  if (lock.adapter?.name !== 'dsh-plugin-swift-cycle' || lock.adapter?.version !== '0.1.3') {
+  if (lock.adapter?.name !== 'dsh-plugin-swift-cycle' || lock.adapter?.version !== '0.1.4') {
     throw new Error('unexpected adapter identity in upstream lock')
   }
   if (
     lock.upstream?.repository !== 'https://github.com/Solismuchengxue/skill_swift_cycle'
-    || lock.upstream?.tag !== 'v1.3.0'
-    || lock.upstream?.commit !== 'f6645dc2768132e48bb936147f40a954855e5ccf'
+    || lock.upstream?.tag !== 'v1.3.1'
+    || lock.upstream?.commit !== '21de521237470bdd55f9b4b0c61e0b6246c02cb8'
     || lock.upstream?.skillName !== 'swift-cycle'
   ) {
     throw new Error('unexpected Swift Cycle identity in upstream lock')

@@ -33,7 +33,7 @@ test('aggregate hash is stable across input order and hash casing', async () => 
   const entries = [
     {
       path: 'SKILL.md',
-      sha256: '9D86791F33542B64DA60778E2D1791B416D8E65CC5888D2499FB4D86952A82BB',
+      sha256: '632B64298C942B6627F7EE5A267CAB7837D4AC71B7F43B781507129F37BBE9E5',
     },
     {
       path: 'agents/openai.yaml',
@@ -49,7 +49,7 @@ test('aggregate hash is stable across input order and hash casing', async () => 
     },
     {
       path: 'references/document-profiles.md',
-      sha256: '6283D824E4762FDBDB2D711563DE674F9C5E97D74B9DE32CE797216E0AB4F852',
+      sha256: '31255A28EA2140660511611F1B66D82B8C36BD7CD1093B6C339F62B21DB8185B',
     },
     {
       path: 'references/governance-boundaries.md',
@@ -61,7 +61,7 @@ test('aggregate hash is stable across input order and hash casing', async () => 
     },
     {
       path: 'references/zh-CN.md',
-      sha256: 'CC0C039E0BE92AEBA9C4B69C25FA8F5B97682BB0EC29CBDBF6EDB227FE240FBB',
+      sha256: 'D9DF65DF06934B0A38DFD878899228154283358E175CBC9C886BA429710AB196',
     },
     {
       path: 'templates/BLUEPRINT.md',
@@ -69,7 +69,7 @@ test('aggregate hash is stable across input order and hash casing', async () => 
     },
     {
       path: 'templates/DESIGN.md',
-      sha256: '60D7905F71DC4D05FE4E3FADE23DC858D7356343A64048BC93FE9674571C2371',
+      sha256: '89CDF7FF4B902BBE857D08DEDEBB0C016A3DEDC974563F2E367C8E1E28CE14EE',
     },
     {
       path: 'templates/DEVLOG.md',
@@ -93,7 +93,7 @@ test('aggregate hash is stable across input order and hash casing', async () => 
     },
     {
       path: 'templates/docs/architecture.md',
-      sha256: 'ACE719EF636D8D2A5F34FFBE51C1E4DC6AFF91DA61433BD1A495D089D86E5B7B',
+      sha256: '221A3202F52C1D288A1B4C9E16B91F33A2F90E31BD646BFB7680A28DB6C55C62',
     },
     {
       path: 'templates/docs/closeout-packet.md',
@@ -115,21 +115,21 @@ test('aggregate hash is stable across input order and hash casing', async () => 
 
   assert.equal(
     aggregateHash(entries),
-    'fccc61c3c9ce91f00e3fbd1238fdf945e7829f9ffa264a4ebc12ff34fc5c8fb0',
+    '7cb1bcf09afb23db310e3da01de88dda6521321dc45919b05a25f2ab9f381cf4',
   )
 })
 
-test('packaged snapshot verifies the exact Swift Cycle v1.3.0 identity', async () => {
+test('packaged snapshot verifies the exact Swift Cycle v1.3.1 identity', async () => {
   const { verifyPackagedSnapshot } = await loadImplementation()
   const result = await verifyPackagedSnapshot({ packageRoot: repositoryRoot })
 
-  assert.equal(result.lock.adapter.version, '0.1.3')
-  assert.equal(result.lock.upstream.tag, 'v1.3.0')
-  assert.equal(result.lock.upstream.commit, 'f6645dc2768132e48bb936147f40a954855e5ccf')
+  assert.equal(result.lock.adapter.version, '0.1.4')
+  assert.equal(result.lock.upstream.tag, 'v1.3.1')
+  assert.equal(result.lock.upstream.commit, '21de521237470bdd55f9b4b0c61e0b6246c02cb8')
   assert.equal(result.lock.upstream.skillName, 'swift-cycle')
   assert.equal(
     result.payloadSha256,
-    'fccc61c3c9ce91f00e3fbd1238fdf945e7829f9ffa264a4ebc12ff34fc5c8fb0',
+    '7cb1bcf09afb23db310e3da01de88dda6521321dc45919b05a25f2ab9f381cf4',
   )
 })
 

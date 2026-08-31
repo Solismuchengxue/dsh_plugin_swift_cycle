@@ -24,7 +24,7 @@ Swift Cycle 只负责一个项目内部的工程循环。它不负责上层协�
 
 ## 使用项目语言
 
-对话按用户要求，其次按本次调用语言。修改文件时优先沿用文件主语言；新建文件时优先项目主语言。不要因对话切换而批量翻译，也不要翻译文件名、命令、API、代码标识或标准状态值。中文术语见 [zh-CN.md](references/zh-CN.md)。
+对话中的普通内容按用户要求，其次按本次调用语言。修改文件中的普通内容优先沿用文件主语言；新建文件中的普通内容优先项目主语言。技术标识不随普通内容翻译：文件名、命令、API、代码标识、标准状态值和品牌名保持准确原文。不要因对话切换而批量翻译。语言判定与图示表达见 [zh-CN.md](references/zh-CN.md)。
 
 ## 读取真实现场
 
@@ -70,7 +70,7 @@ Swift Cycle 只负责一个项目内部的工程循环。它不负责上层协�
 
 新项目在实质实施前必须创建非空、受跟踪的 `docs/blueprint.md`；根目录 Blueprint 默认禁止。接管旧项目时，优先复用完整的 Charter、Product Brief、Project Spec 或其他等价权威，记录路径映射并链接；若缺失，才以确认事实和 `UNKNOWN` 创建 `docs/blueprint.md`。一次性审查不创建 Blueprint。docs 路径命名和旧文件迁移规则见 [document-information-architecture.md](references/document-information-architecture.md)。
 
-需要创建或重整 Blueprint、TODO、DEVLOG 或 DESIGN 时，读取 [document-profiles.md](references/document-profiles.md) 并按需裁剪对应模板，不复制参考项目事实或建立第二权威。
+需要创建或重整 Blueprint、TODO、DEVLOG、DESIGN 或架构文档时，读取 [document-profiles.md](references/document-profiles.md) 并按需裁剪对应模板，不复制参考项目事实或建立第二权威。先理解读者问题与项目事实关系，再决定是否使用可视化以及采用何种表达；不得把示例拓扑当成默认项目结构。
 
 当文档数量、受众差异或平铺结构已经影响可发现性，读取 [document-information-architecture.md](references/document-information-architecture.md)。小项目由 DESIGN 提供必要索引；只有完整 docs 导航确有价值时才增加 `docs/README.md`，并把移动与链接修复纳入一个有界 documentation-hygiene 工作包。
 

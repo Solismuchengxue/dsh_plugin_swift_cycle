@@ -4,16 +4,16 @@
 
 ## 当前状态
 
-- 适配器版本：`0.1.3`（已发布）
-- 上游 tag：`v1.3.0`
-- 上游 commit：`f6645dc2768132e48bb936147f40a954855e5ccf`
-- 上游整体 SHA-256：`fccc61c3c9ce91f00e3fbd1238fdf945e7829f9ffa264a4ebc12ff34fc5c8fb0`
-- 本地源码验证：`0.1.3` 候选已通过 18/18 自动化测试和显式上游 checkout 比对
-- 候选制品预检：已通过 20 个上游载荷文件、26 个包文件的 dry-run 合同和临时解包后完整性验证
+- 适配器版本：`0.1.4`（本地源码候选，未发布）；当前公开版本仍为 `0.1.3`
+- 上游 tag：`v1.3.1`
+- 上游 commit：`21de521237470bdd55f9b4b0c61e0b6246c02cb8`
+- 上游整体 SHA-256：`7cb1bcf09afb23db310e3da01de88dda6521321dc45919b05a25f2ab9f381cf4`
+- 本地源码验证：`0.1.4` 候选已通过 18/18 自动化测试和显式上游 checkout 比对
+- 候选制品预检：`0.1.4` 候选已通过 20 个上游载荷文件、26 个包文件的 dry-run 合同和临时解包后完整性验证
 - 分发状态：GitHub `v0.1.3` 与 npm `0.1.3` 已发布；`v0.1.0` 至 `v0.1.2` 保留为历史版本
-- Harness Runtime 兼容性：历史固定版本已通过隔离验证、GitHub 固定 commit 安装验证，以及 `0.1.0-rc.6` 真实 Web profile 中 GitHub `v0.1.0` 与 npm `0.1.1` 的只读显式调用烟测；`0.1.3` 候选未安装到任何 Harness Runtime
+- Harness Runtime 兼容性：历史固定版本已通过隔离验证、GitHub 固定 commit 安装验证，以及 `0.1.0-rc.6` 真实 Web profile 中 GitHub `v0.1.0` 与 npm `0.1.1` 的只读显式调用烟测；`0.1.4` 候选未安装到任何 Harness Runtime
 
-`0.1.3` 已证明源码、候选制品、GitHub 与 npm 分发身份；隔离 Runtime、真实 profile 和 consumer 仍未验证。既有 Runtime 与真实 Web consumer 结论只覆盖各自记录的 `0.1.0`/`0.1.1` 身份，不自动转移到新版本。
+`0.1.4` 已证明本地源码和候选制品；`0.1.3` 继续承担已验证的公共分发身份。既有 Runtime 与真实 Web consumer 结论只覆盖各自记录的 `0.1.0`/`0.1.1` 身份，不自动转移到新版本。
 
 ## 包含的 Swift Cycle 能力
 
@@ -28,7 +28,8 @@
 - Document Information Architecture：按可发现性决定 DESIGN、docs home、职责目录和用途/受众索引，不复制第二套真源。
 - Project Intent Baseline：新项目在实质实施前建立 `docs/blueprint.md`，旧项目复用完整等价权威，不形成第二真源。
 - Docs Naming：新建 docs Markdown 文件和多单词目录使用小写 snake_case；遗留命名只在独立 documentation-hygiene 工作包中迁移。
-- Language Adaptation：分别解析交流语言与文件语言。
+- Language Adaptation：普通内容服从调用者、项目和文件主语言，精确技术标识保持原文。
+- Semantic Visualization：先理解读者问题与项目事实，再自主选择短文、表格或 Mermaid，并审查语义、可读性、项目语言、权限与边界。
 - Freshness and Packet Lifecycle：对齐过期事实并冻结、替代或退役 Review/Closeout Packet。
 - Reusable Failure Learning：只把已确认且可复用的失败防线晋升为共享规则。
 
@@ -111,7 +112,7 @@ node scripts/verify-upstream.mjs --source "<path-to-swift-cycle-skill-directory>
 3. 隔离 Harness Runtime 能注册和显式调用；
 4. 真实用户 profile 已安装并由实际消费者使用。
 
-真实 consumer 证据覆盖 GitHub `v0.1.0` 在空的非 Git 工作区与本仓库中的只读调用，以及 npm `0.1.1` 在本仓库中的一次只读调用。`0.1.3` 已完成源码、候选制品和公共分发身份验证；隔离 Runtime、真实 profile 和 consumer 保持 `NOT_VERIFIED`，本轮不修改部署状态。参见 [2026-08-15 DSH 隔离兼容性验证](docs/evidence/2026-08-15-dsh-compatibility.md)、[2026-08-16 真实 Web consumer 烟测](docs/evidence/2026-08-16-real-web-consumer-smoke.md)、[2026-08-16 非空 Git 项目治理烟测](docs/evidence/2026-08-16-real-git-project-governance-smoke.md)、[2026-08-20 npm v0.1.1 真实 consumer 烟测](docs/evidence/2026-08-20-real-npm-v0.1.1-consumer-smoke.md)、[2026-08-30 npm v0.1.2 发布证据](docs/evidence/2026-08-30-npm-release-v0.1.2.md)与 [2026-08-31 npm v0.1.3 发布证据](docs/evidence/2026_08_31_npm_release_v0_1_3.md)。
+真实 consumer 证据覆盖 GitHub `v0.1.0` 在空的非 Git 工作区与本仓库中的只读调用，以及 npm `0.1.1` 在本仓库中的一次只读调用。`0.1.3` 已完成源码、候选制品和公共分发身份验证；`0.1.4` 已完成本地源码和候选制品验证，公共分发仍待完成，隔离 Runtime、真实 profile 和 consumer 保持 `NOT_VERIFIED`。参见 [2026-08-15 DSH 隔离兼容性验证](docs/evidence/2026-08-15-dsh-compatibility.md)、[2026-08-16 真实 Web consumer 烟测](docs/evidence/2026-08-16-real-web-consumer-smoke.md)、[2026-08-16 非空 Git 项目治理烟测](docs/evidence/2026-08-16-real-git-project-governance-smoke.md)、[2026-08-20 npm v0.1.1 真实 consumer 烟测](docs/evidence/2026-08-20-real-npm-v0.1.1-consumer-smoke.md)、[2026-08-30 npm v0.1.2 发布证据](docs/evidence/2026-08-30-npm-release-v0.1.2.md)与 [2026-08-31 npm v0.1.3 发布证据](docs/evidence/2026_08_31_npm_release_v0_1_3.md)。
 
 ## 权威来源
 

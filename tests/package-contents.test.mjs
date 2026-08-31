@@ -88,7 +88,7 @@ test('packed artifact verifies its embedded Swift Cycle snapshot after extractio
 
   assert.equal(
     verified.payloadSha256,
-    'fccc61c3c9ce91f00e3fbd1238fdf945e7829f9ffa264a4ebc12ff34fc5c8fb0',
+    '7cb1bcf09afb23db310e3da01de88dda6521321dc45919b05a25f2ab9f381cf4',
   )
   assert.ok(!license.includes('\r'), 'packed LICENSE must use LF line endings')
 })
