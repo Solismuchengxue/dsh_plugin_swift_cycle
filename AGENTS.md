@@ -6,6 +6,7 @@
 
 - 非简单治理、文档收敛、提交规划和源码/运行态判断必须显式使用当前环境安装的 `$swift-cycle`。
 - `README.md` 只保留用户可见的安装、使用和限制；`DESIGN.md` 是设计总入口；详细设计、计划和证据进入 `docs/`。
+- 新建 docs Markdown 文件和多单词目录遵循 vendored Swift Cycle 的小写 snake_case 规则；既有命名偏差只在独立 documentation-hygiene 工作包内迁移，不复制第二权威。
 - `TODO.md` 和 `DEVLOG.md` 仅作本地维护视图并保持 Git ignored；长期共享事实按职责晋升到 README、DESIGN、共享计划或 evidence 文档。
 - 不创建 `PROJECT_STATE.md`，不把多个独立生命周期压缩成一个固定状态 Schema。
 

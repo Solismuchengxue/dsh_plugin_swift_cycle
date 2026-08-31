@@ -12,6 +12,20 @@
 
 约十篇文档、同类约两篇可以触发检查，但不是机械阈值。四篇职责清晰、受众单一且从 DESIGN 易发现的文档无需新增 docs home。
 
+## docs 命名
+
+新建 `docs/` 及其子目录内容时，使用以下唯一命名规则：
+
+- Markdown 文件名使用小写 `snake_case`，多单词只用下划线分隔，不使用连字符、空格或 CamelCase/PascalCase；缩写同样小写，例如 `api_contract.md`。
+- 扩展名统一为小写 `.md`。
+- 多单词目录名同样使用小写 `snake_case`。
+- 项目 Blueprint 的正式默认路径是 `docs/blueprint.md`。根目录不得新建 Blueprint，`docs/BLUEPRINT.md` 也不合规。
+- 根目录约定入口 `README.md`、`DESIGN.md`、`AGENTS.md`、`TODO.md` 和 `DEVLOG.md` 沿用大写生态约定，不属于 docs 命名规则。`docs/README.md` 和 docs 子目录索引 `README.md` 是唯一例外。
+
+示例：`docs/blueprint.md`、`docs/architecture.md`、`docs/security_boundary.md`、`docs/storage_and_artifact_boundary.md`、`docs/adr/0001_initial_architecture.md`。
+
+接管旧项目时不在普通任务中批量改名。先记录偏差；只有独立 documentation-hygiene 工作包获准后，才使用 `git mv` 或等价可追溯移动，并一次修复全部入站链接。不得复制一份命名合规的新文件而形成第二权威。
+
 ## 长期职责主轴
 
 目录按项目真实存在的长期职责组织，例如：

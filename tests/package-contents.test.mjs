@@ -48,6 +48,7 @@ test('npm dry-run package contains only the audited adapter runtime files', () =
     'vendor/swift-cycle/references/governance-boundaries.md',
     'vendor/swift-cycle/references/lifecycle-and-closeout.md',
     'vendor/swift-cycle/references/zh-CN.md',
+    'vendor/swift-cycle/templates/BLUEPRINT.md',
     'vendor/swift-cycle/templates/DESIGN.md',
     'vendor/swift-cycle/templates/DEVLOG.md',
     'vendor/swift-cycle/templates/TODO.md',
@@ -87,7 +88,7 @@ test('packed artifact verifies its embedded Swift Cycle snapshot after extractio
 
   assert.equal(
     verified.payloadSha256,
-    '4e3e94815947c77094717aacbe17c11f7c9c15906b3f9499433c21c254301664',
+    'fccc61c3c9ce91f00e3fbd1238fdf945e7829f9ffa264a4ebc12ff34fc5c8fb0',
   )
   assert.ok(!license.includes('\r'), 'packed LICENSE must use LF line endings')
 })

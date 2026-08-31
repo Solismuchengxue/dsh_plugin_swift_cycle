@@ -3,8 +3,8 @@
 ## 状态
 
 - 项目治理：已建立。
-- 适配器源码：`0.1.3` 本地候选锁定 Swift Cycle commit `18df0777921aa9bf30977a4a07b911b8feaebd28`；18/18 自动化测试和显式上游 checkout 比对已通过，尚未提交或发布。
-- 打包制品：`0.1.3` 候选的 19 个上游载荷文件、25 个包文件 dry-run 合同及临时解包后完整性验证已通过。
+- 适配器源码：`0.1.3` 本地候选锁定 Swift Cycle `v1.3.0` / commit `f6645dc2768132e48bb936147f40a954855e5ccf`；18/18 自动化测试和显式上游 checkout 比对已通过，尚未发布。
+- 打包制品：`0.1.3` 候选的 20 个上游载荷文件、26 个包文件 dry-run 合同及临时解包后完整性验证已通过。
 - 隔离 Harness 兼容性：已按固定版本通过验证。
 - 真实用户环境：GitHub `v0.1.0` 固定发布 commit 已通过空工作区和本仓库中的只读显式调用烟测；npm `v0.1.1` 已精确安装到同一真实 Web profile，并通过本仓库中的一次只读显式调用烟测。
 - GitHub 分发：`v0.1.0`、`v0.1.1` 与 `v0.1.2` 已发布；`v0.1.2` tag 精确指向发布 commit `8697450e53d9829c8b1e07d8fa5d7e059b0a7f89`。
@@ -19,9 +19,9 @@
 
 ## 正式架构
 
-适配器携带只读的上游快照，通过 DeepSeek Harness 的 `ctx.skills.register()` 注册 `swift-cycle`。上游身份和文件由 `upstream.lock.json` 及 SHA-256 校验约束；Harness 专用调用策略位于快照之外。`0.1.3` 候选锁定未打 tag 的 commit `18df0777921aa9bf30977a4a07b911b8feaebd28`，并携带简体中文 canonical Skill、host metadata、六份按需 reference 和十一份条件式模板。
+适配器携带只读的上游快照，通过 DeepSeek Harness 的 `ctx.skills.register()` 注册 `swift-cycle`。上游身份和文件由 `upstream.lock.json` 及 SHA-256 校验约束；Harness 专用调用策略位于快照之外。`0.1.3` 候选锁定上游 `v1.3.0` / commit `f6645dc2768132e48bb936147f40a954855e5ccf`，并携带简体中文 canonical Skill、host metadata、六份按需 reference 和十二份条件式模板。
 
-首版使用固定 GitHub commit 安装。`v0.1.1` 增加 npm 固定版本分发；`v0.1.2` 更新上游治理载荷。`0.1.3` 本地候选继续刷新为中文 canonical、一次 adoption 后持久绑定、后台自动维护、条件式文档信息架构，以及可移植的 TODO、DEVLOG 与 DESIGN 模板，同时保持无运行时依赖、无安装生命周期脚本、运行时不访问网络且不使用凭据。Release tag 负责版本发现；npm 固定版本和 GitHub 完整 commit 分别作为对应渠道的不可变安装身份。
+首版使用固定 GitHub commit 安装。`v0.1.1` 增加 npm 固定版本分发；`v0.1.2` 更新上游治理载荷。`0.1.3` 候选继续刷新中文 canonical、一次 adoption 后持久绑定、后台自动维护和条件式文档信息架构，并加入项目意图 Blueprint、`docs/blueprint.md` 默认权威与 docs 小写 snake_case 命名规则。它仍保持无运行时依赖、无安装生命周期脚本、运行时不访问网络且不使用凭据。Release tag 负责版本发现；npm 固定版本和 GitHub 完整 commit 分别作为对应渠道的不可变安装身份。
 
 ## 关键边界
 
@@ -35,7 +35,7 @@
 - npm 分发基线：`dsh-plugin-swift-cycle@0.1.1`，发布 commit `d44bee70c109bb1d772d26ee790d6de9aadce9cc`，Registry integrity `sha512-UchV9FYEg3fqw67nAcvjMy7Hg41S2ytlMMBrFnI2NvybRKrWOGPAzfKvs4+0nWUPVpPc6wBox51Jj90/+Z/bLA==`。
 - npm 真实 consumer 基线：`@deepseek-ai/dsh` `0.1.0-rc.6`，`dsh-plugin-swift-cycle@0.1.1`，本仓库 HEAD `b4fbdcc8b7e86ad3cb1e5350aa2ee2bf0b90457c`，`Read Only` 权限下单次用户显式调用。
 - 当前分发基线：`dsh-plugin-swift-cycle@0.1.2`、发布 commit `8697450e53d9829c8b1e07d8fa5d7e059b0a7f89`、上游 commit `f383157fce7d179f29de867605d16e01b64366c8`、payload SHA-256 `fff7094f40c291cc9e03aa96ad271ef110229aba2fb7afa322473949043e4c19`；源码、本地 pack 与公共分发身份已验证。
-- 当前源码候选：`dsh-plugin-swift-cycle@0.1.3`、上游 commit `18df0777921aa9bf30977a4a07b911b8feaebd28`、payload SHA-256 `4e3e94815947c77094717aacbe17c11f7c9c15906b3f9499433c21c254301664`；仅本地源码与候选 pack 已验证。
+- 当前源码候选：`dsh-plugin-swift-cycle@0.1.3`、上游 `v1.3.0` / commit `f6645dc2768132e48bb936147f40a954855e5ccf`、payload SHA-256 `fccc61c3c9ce91f00e3fbd1238fdf945e7829f9ffa264a4ebc12ff34fc5c8fb0`；本地源码与候选 pack 已验证，公共分发待完成。
 
 ## 详细文档
 

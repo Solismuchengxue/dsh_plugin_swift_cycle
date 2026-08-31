@@ -6,14 +6,14 @@
   },
   "upstream": {
     "repository": "https://github.com/Solismuchengxue/skill_swift_cycle",
-    "tag": null,
-    "commit": "18df0777921aa9bf30977a4a07b911b8feaebd28",
+    "tag": "v1.3.0",
+    "commit": "f6645dc2768132e48bb936147f40a954855e5ccf",
     "skillName": "swift-cycle"
   },
   "files": [
     {
       "path": "SKILL.md",
-      "sha256": "dbd6b2e3a3fc7090a4d19577f0dd65b6be1173d655f22d6988136b6380713373"
+      "sha256": "9d86791f33542b64da60778e2d1791b416d8e65cc5888d2499fb4d86952a82bb"
     },
     {
       "path": "agents/openai.yaml",
@@ -21,15 +21,15 @@
     },
     {
       "path": "references/adoption-and-routing.md",
-      "sha256": "c515c56b265cc48ddb58e82d0bf2fb3f1fd7fcf9b02f218b5b2b94a8ccb54258"
+      "sha256": "5a66966b5942870f18826ba7b14ddb380ee32ba0d2de97ca1197c5e72919a1d0"
     },
     {
       "path": "references/document-information-architecture.md",
-      "sha256": "d2e8707e663cb8d5ef9dc39efaf8ddb248a7d13723d1cd4448395aa2b02a75e1"
+      "sha256": "36480edb387bc073119a1850dd4e40d917fc134e3627ec7037d59ec128f62dd5"
     },
     {
       "path": "references/document-profiles.md",
-      "sha256": "bf65d0247f717c279a0bb7fe88ab3023b8aa2eacd555ca7b027a50492d7a13f1"
+      "sha256": "6283d824e4762fdbdb2d711563de674f9c5e97d74b9de32ce797216e0ab4f852"
     },
     {
       "path": "references/governance-boundaries.md",
@@ -37,11 +37,15 @@
     },
     {
       "path": "references/lifecycle-and-closeout.md",
-      "sha256": "b52d3adaba02ea70dba58f5c8dc70e9d555e0ea9cc8403c5d008dcc308b6c1ed"
+      "sha256": "cec4d8765eb8d3d1b0d8caa011a617f6082927a23b7018c1b2b56bef69132ed5"
     },
     {
       "path": "references/zh-CN.md",
-      "sha256": "1bf265e08b616b439cd024b593f6aadc7ee18c2d4f0fe6bceb44b8120962662b"
+      "sha256": "cc0c039e0be92aeba9c4b69c25fa8f5b97682bb0ec29cbdbf6edb227fe240fbb"
+    },
+    {
+      "path": "templates/BLUEPRINT.md",
+      "sha256": "8b0f030a0ef2b04c086e4bbaf0f2589350fbf6455a9dd7b4888176e3a834926c"
     },
     {
       "path": "templates/DESIGN.md",
@@ -88,6 +92,6 @@
       "sha256": "34ac545ff4919f2e98d187241bc29cccc879b241f17a061eab8f22407a0ce591"
     }
   ],
-  "payloadSha256": "4e3e94815947c77094717aacbe17c11f7c9c15906b3f9499433c21c254301664",
-  "registrationMetadataSha256": "0f62d33161fd4d4ae9a4f940b2f68cb39a06cbcb2dd87db090f76fea8a165439"
+  "payloadSha256": "fccc61c3c9ce91f00e3fbd1238fdf945e7829f9ffa264a4ebc12ff34fc5c8fb0",
+  "registrationMetadataSha256": "c71d5517575435f515204bf4314b4a62a002fab32ac8da925e99f468bb613009"
 }

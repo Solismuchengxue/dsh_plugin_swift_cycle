@@ -28,7 +28,7 @@ Swift Cycle 只负责一个项目内部的工程循环。它不负责上层协�
 
 ## 读取真实现场
 
-1. 读取适用的 `AGENTS.md`、`README.md`、`DESIGN.md`、相关 `docs/`、忽略规则和可访问的本地维护记录。
+1. 读取适用的 `AGENTS.md`、项目意图权威、`README.md`、`DESIGN.md`、相关 `docs/`、忽略规则和可访问的本地维护记录。
 2. 检查 Git 分支、状态和相关 diff，分开既有用户改动与当前任务。
 3. 区分已确认事实、观察、推断、候选、限制和未知项。
 4. 只检查与当前声明相关的源码、制品、运行态或消费者层，不假设不存在或已经验证的层。
@@ -50,7 +50,7 @@ Swift Cycle 只负责一个项目内部的工程循环。它不负责上层协�
 
 选择能覆盖真实职责的最小档位：
 
-- `minimal`：复用 README、简洁设计入口、AGENTS、本地 TODO/DEVLOG 和已有必要文档。
+- `minimal`：覆盖项目意图基线，并复用 README、简洁设计入口、AGENTS、本地 TODO/DEVLOG 和已有必要文档。
 - `standard`：仅在长期架构、路线图、评估或重要决策需要独立权威时增加对应文档。
 - `runtime_integration`：仅在当前任务需要建立、改变或验证多个运维、合同、安全、存储、集成或身份层时增加文档与证据。
 
@@ -58,6 +58,7 @@ Swift Cycle 只负责一个项目内部的工程循环。它不负责上层协�
 
 ## 文档职责
 
+- `docs/blueprint.md` 或等价权威：共享、受跟踪的项目意图基线，说明为什么做、为谁做、可观察结果、范围和非目标、约束与未知、关键边界、启动出口、待决事项和更新触发。
 - `README.md`：面向用户的介绍、安装或启动、用法和用户可见限制。
 - `DESIGN.md`：简洁设计总入口、正式边界、候选区分和详细文档索引。
 - `AGENTS.md`：项目规则、Swift Cycle 持久绑定、安全边界、同步触发与验证要求。
@@ -67,7 +68,9 @@ Swift Cycle 只负责一个项目内部的工程循环。它不负责上层协�
 
 一个事实只保留一个共享权威；其他位置使用链接或短摘要。模板只是条件式结构，必须按现场删减，禁止机械创建完整文档集。
 
-需要创建或重整 TODO、DEVLOG 或 DESIGN 时，读取 [document-profiles.md](references/document-profiles.md) 并按需裁剪对应模板，不复制参考项目事实或建立第二权威。
+新项目在实质实施前必须创建非空、受跟踪的 `docs/blueprint.md`；根目录 Blueprint 默认禁止。接管旧项目时，优先复用完整的 Charter、Product Brief、Project Spec 或其他等价权威，记录路径映射并链接；若缺失，才以确认事实和 `UNKNOWN` 创建 `docs/blueprint.md`。一次性审查不创建 Blueprint。docs 路径命名和旧文件迁移规则见 [document-information-architecture.md](references/document-information-architecture.md)。
+
+需要创建或重整 Blueprint、TODO、DEVLOG 或 DESIGN 时，读取 [document-profiles.md](references/document-profiles.md) 并按需裁剪对应模板，不复制参考项目事实或建立第二权威。
 
 当文档数量、受众差异或平铺结构已经影响可发现性，读取 [document-information-architecture.md](references/document-information-architecture.md)。小项目由 DESIGN 提供必要索引；只有完整 docs 导航确有价值时才增加 `docs/README.md`，并把移动与链接修复纳入一个有界 documentation-hygiene 工作包。
 
@@ -76,11 +79,12 @@ Swift Cycle 只负责一个项目内部的工程循环。它不负责上层协�
 在已批准任务或里程碑范围内，文档同步属于正常实施步骤，无需单独请示：
 
 - 用户行为变化时更新 README 或用户文档。
+- 目标用户、价值、目标结果、范围、非目标、关键约束、假设或边界实质变化时更新 Blueprint；小型实现或普通里程碑变化不触发。
 - 架构、合同、数据、工具职责或交付边界变化时更新 DESIGN 和对应详细文档。
 - 行动、阻塞或下一步变化时更新本地 TODO。
 - 失败、拒绝方案或内部维护证据变化时更新本地 DEVLOG。
 - 长期承诺、决策、验证事实或迁移结果按职责晋升到共享文档，本地记录只保留状态或链接。
-- 每个里程碑关闭时检查 README、DESIGN、docs、TODO、DEVLOG 和活动 Packet；更新受影响内容，或记录“无文档影响”及理由。
+- 每个里程碑关闭时检查 Blueprint、README、DESIGN、docs、TODO、DEVLOG 和活动 Packet；更新受影响内容，或记录“无文档影响”及理由。
 
 详细治理、状态和证据边界见 [governance-boundaries.md](references/governance-boundaries.md)；候选、失败学习和关闭流程见 [lifecycle-and-closeout.md](references/lifecycle-and-closeout.md)。
 

@@ -13,6 +13,7 @@ const expectedFiles = [
   'references/governance-boundaries.md',
   'references/lifecycle-and-closeout.md',
   'references/zh-CN.md',
+  'templates/BLUEPRINT.md',
   'templates/DESIGN.md',
   'templates/DEVLOG.md',
   'templates/TODO.md',
@@ -74,8 +75,8 @@ function validateLock(lock) {
   }
   if (
     lock.upstream?.repository !== 'https://github.com/Solismuchengxue/skill_swift_cycle'
-    || lock.upstream?.tag !== null
-    || lock.upstream?.commit !== '18df0777921aa9bf30977a4a07b911b8feaebd28'
+    || lock.upstream?.tag !== 'v1.3.0'
+    || lock.upstream?.commit !== 'f6645dc2768132e48bb936147f40a954855e5ccf'
     || lock.upstream?.skillName !== 'swift-cycle'
   ) {
     throw new Error('unexpected Swift Cycle identity in upstream lock')
