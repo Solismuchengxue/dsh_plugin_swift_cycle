@@ -3,12 +3,12 @@
 ## 状态
 
 - 项目治理：已建立。
-- 适配器源码：`0.1.4` 本地候选锁定 Swift Cycle `v1.3.1` / commit `21de521237470bdd55f9b4b0c61e0b6246c02cb8`；18/18 自动化测试和显式上游 checkout 比对已通过，尚未发布。
+- 适配器源码：`0.1.4` 锁定 Swift Cycle `v1.3.1` / commit `21de521237470bdd55f9b4b0c61e0b6246c02cb8`；18/18 自动化测试和显式上游 checkout 比对已通过，发布 commit 为 `d4201e6cc71b3660609b15300fe1cabdb4321cda`。
 - 打包制品：`0.1.4` 候选的 20 个上游载荷文件、26 个包文件 dry-run 合同及临时解包后完整性验证已通过。
 - 隔离 Harness 兼容性：已按固定版本通过验证。
 - 真实用户环境：GitHub `v0.1.0` 固定发布 commit 已通过空工作区和本仓库中的只读显式调用烟测；npm `v0.1.1` 已精确安装到同一真实 Web profile，并通过本仓库中的一次只读显式调用烟测。
-- GitHub 分发：`v0.1.0` 至 `v0.1.3` 已发布；`v0.1.3` tag 精确指向发布 commit `0c491852234be515083590802a4404476f701028`。
-- npm 分发：`0.1.3` 已公开发布，Registry SHA-1 与 integrity 和候选制品一致；`0.1.1` 的 rc.6 隔离验证保留为历史版本证据。
+- GitHub 分发：`v0.1.0` 至 `v0.1.4` 已发布；`v0.1.4` tag 精确指向发布 commit `d4201e6cc71b3660609b15300fe1cabdb4321cda`。
+- npm 分发：`0.1.4` 已公开发布，Registry SHA-1 与 integrity 和候选制品一致；`0.1.1` 的 rc.6 隔离验证保留为历史版本证据。
 - `0.1.4` Runtime/consumer：尚未安装到隔离或真实 profile，也未执行模型调用，保持 `NOT_VERIFIED`。
 
 以上结论彼此独立；本项目不使用单一总体状态替代各层证据。
@@ -19,7 +19,7 @@
 
 ## 正式架构
 
-适配器携带只读的上游快照，通过 DeepSeek Harness 的 `ctx.skills.register()` 注册 `swift-cycle`。上游身份和文件由 `upstream.lock.json` 及 SHA-256 校验约束；Harness 专用调用策略位于快照之外。`0.1.4` 候选锁定上游 `v1.3.1` / commit `21de521237470bdd55f9b4b0c61e0b6246c02cb8`，并携带简体中文 canonical Skill、host metadata、六份按需 reference 和十二份条件式模板。
+适配器携带只读的上游快照，通过 DeepSeek Harness 的 `ctx.skills.register()` 注册 `swift-cycle`。上游身份和文件由 `upstream.lock.json` 及 SHA-256 校验约束；Harness 专用调用策略位于快照之外。`0.1.4` 锁定上游 `v1.3.1` / commit `21de521237470bdd55f9b4b0c61e0b6246c02cb8`，并携带简体中文 canonical Skill、host metadata、六份按需 reference 和十二份条件式模板。
 
 首版使用固定 GitHub commit 安装。`v0.1.1` 增加 npm 固定版本分发；`v0.1.2` 更新上游治理载荷；`v0.1.3` 加入 Blueprint 与 docs 命名规则。`v0.1.4` 候选刷新普通内容语言优先级、精确技术标识保留，以及按读者问题和项目事实自主选择并语义审查可视化的规则。它仍保持无运行时依赖、无安装生命周期脚本、运行时不访问网络且不使用凭据。Release tag 负责版本发现；npm 固定版本和 GitHub 完整 commit 分别作为对应渠道的不可变安装身份。
 
@@ -34,8 +34,7 @@
 - 非空 Git 治理基线：本仓库 HEAD `582f4ee258a4cb9b09276d2d18f73b72c20d731c`，`Read Only` 权限下单次用户显式调用。
 - npm 分发基线：`dsh-plugin-swift-cycle@0.1.1`，发布 commit `d44bee70c109bb1d772d26ee790d6de9aadce9cc`，Registry integrity `sha512-UchV9FYEg3fqw67nAcvjMy7Hg41S2ytlMMBrFnI2NvybRKrWOGPAzfKvs4+0nWUPVpPc6wBox51Jj90/+Z/bLA==`。
 - npm 真实 consumer 基线：`@deepseek-ai/dsh` `0.1.0-rc.6`，`dsh-plugin-swift-cycle@0.1.1`，本仓库 HEAD `b4fbdcc8b7e86ad3cb1e5350aa2ee2bf0b90457c`，`Read Only` 权限下单次用户显式调用。
-- 当前分发基线：`dsh-plugin-swift-cycle@0.1.3`、发布 commit `0c491852234be515083590802a4404476f701028`、上游 `v1.3.0` / commit `f6645dc2768132e48bb936147f40a954855e5ccf`、payload SHA-256 `fccc61c3c9ce91f00e3fbd1238fdf945e7829f9ffa264a4ebc12ff34fc5c8fb0`、npm SHA-1 `335623c1d66ce2fa842a04d417a627265f90af68`；源码、本地 pack、GitHub 与 npm 分发身份已验证。
-- 当前源码候选：`dsh-plugin-swift-cycle@0.1.4`、上游 `v1.3.1` / commit `21de521237470bdd55f9b4b0c61e0b6246c02cb8`、payload SHA-256 `7cb1bcf09afb23db310e3da01de88dda6521321dc45919b05a25f2ab9f381cf4`；源码与候选 pack 已验证，公共分发待完成。
+- 当前分发基线：`dsh-plugin-swift-cycle@0.1.4`、发布 commit `d4201e6cc71b3660609b15300fe1cabdb4321cda`、上游 `v1.3.1` / commit `21de521237470bdd55f9b4b0c61e0b6246c02cb8`、payload SHA-256 `7cb1bcf09afb23db310e3da01de88dda6521321dc45919b05a25f2ab9f381cf4`、npm SHA-1 `69287192e8a7c1ff70aaace273f3d5970e2b7fe9`；源码、本地 pack、GitHub 与 npm 分发身份已验证。
 
 ## 详细文档
 
@@ -48,5 +47,6 @@
 - [npm v0.1.1 真实 consumer 烟测证据](docs/evidence/2026-08-20-real-npm-v0.1.1-consumer-smoke.md)
 - [npm v0.1.2 发布证据](docs/evidence/2026-08-30-npm-release-v0.1.2.md)
 - [npm v0.1.3 发布证据](docs/evidence/2026_08_31_npm_release_v0_1_3.md)
+- [npm v0.1.4 发布证据](docs/evidence/2026_08_31_npm_release_v0_1_4.md)
 
-隔离 Runtime 与各分发身份的安装结论只适用于对应的固定 Harness 和适配器身份；真实 Web consumer 结论只覆盖 `0.1.0-rc.6`、GitHub `v0.1.0` 固定适配器 commit 在一个空的非 Git 工作区和本仓库中的只读调用，以及 npm `v0.1.1` 在本仓库上述 HEAD 的一次只读调用。`0.1.3` 的公共发布已验证；`0.1.4` 的源码和候选 pack 已验证，公共分发、隔离 Runtime、真实 profile、consumer 和生产治理仍待分别验证。
+隔离 Runtime 与各分发身份的安装结论只适用于对应的固定 Harness 和适配器身份；真实 Web consumer 结论只覆盖 `0.1.0-rc.6`、GitHub `v0.1.0` 固定适配器 commit 在一个空的非 Git 工作区和本仓库中的只读调用，以及 npm `v0.1.1` 在本仓库上述 HEAD 的一次只读调用。`0.1.4` 的公共发布已验证；隔离 Runtime、真实 profile、consumer 和生产治理仍未验证。
